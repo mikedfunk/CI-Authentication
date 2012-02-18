@@ -6,12 +6,12 @@ An authentication system for CodeIgniter.
 Setup
 ----------------------------
 
-1. Clone this into *application/third_party*
-2. Add this to the ```$autoload['packages']``` array in *application/config/autoload.php*:  ```APPPATH.'third_party/error_arrays'```
-3. Import *setup.sql* in PHPMyAdmin or something
+1. Clone this into **application/third_party**
+2. Add this to the ```$autoload['packages']``` array in **application/config/autoload.php**:  ```APPPATH.'third_party/error_arrays'```
+3. Import **setup.sql** in PHPMyAdmin or something
 4. Add a user row
 5. Add a role row
-6. Edit *config/authentication_config.php* with the proper stuff like redirect urls, etc.
+6. Edit **config/authentication_config.php** with the proper stuff like redirect urls, etc.
 
 Restrict
 ----------------------------
