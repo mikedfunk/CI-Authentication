@@ -2,7 +2,7 @@
 /**
  * authentication_model
  * 
- * Description
+ * All queries for authentication package.
  * 
  * @license		http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @author		Mike Funk
@@ -29,6 +29,8 @@ class authentication_model extends CI_Model
 	
 	/**
 	 * __construct function.
+	 *
+	 * load common resources.
 	 * 
 	 * @access public
 	 * @return void
@@ -38,12 +40,16 @@ class authentication_model extends CI_Model
 		parent::__construct();
 		$this->load->database();
 		$this->config->load('authentication_config');
+		log_message('debug', 'Authentication: model loaded.');
 	}
 	
 	// --------------------------------------------------------------------------
 	
 	/**
 	 * password_check function.
+	 *
+	 * checks whether the password for a given user matches the passed password
+	 * after being encrypted.
 	 * 
 	 * @access public
 	 * @param string $username
@@ -90,10 +96,12 @@ class authentication_model extends CI_Model
 	
 	/**
 	 * username_check function.
+	 *
+	 * checks whether a user by this username exists.
 	 * 
 	 * @access public
 	 * @param mixed $username
-	 * @return void
+	 * @return bool
 	 */
 	public function username_check($username)
 	{
@@ -112,11 +120,13 @@ class authentication_model extends CI_Model
 	
 	/**
 	 * get_user_by_username function.
+	 *
+	 * returns the query for a user based on a passed username.
 	 * 
 	 * @access public
 	 * @param mixed $username
-	 * @param mixed $join (default: true)
-	 * @return void
+	 * @param mixed $join (default: true) whether to join in the role.
+	 * @return object
 	 */
 	public function get_user_by_username($username, $join = true)
 	{
@@ -142,6 +152,8 @@ class authentication_model extends CI_Model
 	
 	/**
 	 * edit_user function.
+	 *
+	 * edits a user passed via an array.
 	 * 
 	 * @access public
 	 * @param array $post

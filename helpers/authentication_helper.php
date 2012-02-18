@@ -2,7 +2,7 @@
 /**
  * authentication_helper
  * 
- * Description
+ * shortcuts for username and password from the session
  * 
  * @license		http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @author		Mike Funk
@@ -20,6 +20,8 @@
 
 /**
  * auth_username function.
+ *
+ * username from session with configurable username field value
  * 
  * @access public
  * @return void
@@ -37,6 +39,8 @@ function auth_username()
 
 /**
  * auth_password function.
+ *
+ * password from session with configurable password field value
  * 
  * @access public
  * @return void

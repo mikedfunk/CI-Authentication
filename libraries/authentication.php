@@ -2,7 +2,7 @@
 /**
  * authentication
  * 
- * Description
+ * Tools for authentication in CodeIgniter.
  * 
  * @license		http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @author		Mike Funk
@@ -27,6 +27,8 @@ class authentication
 	
 	/**
 	 * _ci
+	 *
+	 * The codeigniter superobject
 	 * 
 	 * @var mixed
 	 * @access private
@@ -37,6 +39,8 @@ class authentication
 	
 	/**
 	 * __construct function.
+	 *
+	 * load common resources
 	 * 
 	 * @access public
 	 * @return void
@@ -53,6 +57,8 @@ class authentication
 	
 	/**
 	 * restrict_access function.
+	 *
+	 * if not logged in, redirects to configured url.
 	 * 
 	 * @access public
 	 * @return void
@@ -80,6 +86,8 @@ class authentication
 	
 	/**
 	 * remember_me function.
+	 *
+	 * sets cookies if remember me is checked, otherwise deletes cookies.
 	 * 
 	 * @access public
 	 * @return void
@@ -128,6 +136,9 @@ class authentication
 	
 	/**
 	 * do_login function.
+	 *
+	 * hashes and salts password, logs in user to session, redirects to 
+	 * configured url
 	 * 
 	 * @access public
 	 * @return bool
@@ -135,10 +146,8 @@ class authentication
 	public function do_login()
 	{
 		$this->_ci->load->model('authentication_model', 'auth_model');
-		$this->_ci->load->helper('encrypt_helper');
-		$this->_ci->load->helper('string');
+		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
 		$this->_ci->load->library('session');
-		$this->_ci->load->helper('url');
 		
 		// set session vars, redirect to admin home
 		$q = $this->_ci->auth_model->get_user_by_username($this->_ci->input->post(config_item('username_field')));
@@ -165,6 +174,8 @@ class authentication
 
 	/**
 	 * do_logout
+	 *
+	 * destroys session, redirects to configured url.
 	 *
 	 * Destroys the session
 	 *

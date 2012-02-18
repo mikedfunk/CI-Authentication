@@ -2,7 +2,7 @@
 /**
  * authentication_config
  * 
- * Description
+ * All configurable values for the authentication package
  * 
  * @license		http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @author		Mike Funk
