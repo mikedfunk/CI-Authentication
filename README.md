@@ -50,3 +50,8 @@ For the logout controller method, do this:
     $this->authentication->do_logout();
     
 It will destroy the session and redirect to the configured logged out url.
+
+To Do
+----------------------------
+
+* Add method of signing up
