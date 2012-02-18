@@ -86,8 +86,8 @@ class authentication
 	 */
 	public function remember_me()
 	{
-		// set remember_me to 0 if not checked
-		if (!$this->_ci->input->post(config_item('remember_me_field')))
+		// set remember_me to 0 if not checked and there is post data
+		if (!$this->_ci->input->post(config_item('remember_me_field')) && $this->_ci->input->post() !== false)
 		{
 			$_POST[config_item('remember_me_field')] = 0;
 		}
@@ -99,24 +99,24 @@ class authentication
 			(config_item('remember_me_timeout'))
 		);
 		
-		// if remember_me, remember, remember the 5th of November
+		// if remember_me is true, remember, remember the 5th of November
 		if ($this->_ci->input->post(config_item('remember_me_field')))
 		{
 			// set username cookie
 			$this->_ci->input->set_cookie(
 				config_item('username_field'), 
 				$this->_ci->input->post(config_item('username_field')), 
-				0
+				(config_item('remember_me_timeout'))
 			);
 			
 			// set password cookie
 			$this->_ci->input->set_cookie(
 				config_item('password_field'), 
 				$this->_ci->input->post(config_item('password_field')), 
-				0
+				(config_item('remember_me_timeout'))
 			);
 		}
-		// otherwise fuggedaboutit
+		// otherwise remember_me is false. fuggedaboutit. delete cookie.
 		else
 		{
 			$this->_ci->input->set_cookie(config_item('username_field'), '', time() -1);
