@@ -7,7 +7,7 @@ Setup
 ----------------------------
 
 1. Clone this into ```application/third_party```
-2. Add this to the ```$autoload['packages']``` array in ```application/config/autoload.php```:  ```APPPATH.'third_party/error_arrays'```
+2. Add this to the ```$autoload['packages']``` array in application/config/autoload.php:  ```APPPATH.'third_party/error_arrays'```
 3. Import ```setup.sql``` in PHPMyAdmin or something
 4. Add a user row
 5. Add a role row
