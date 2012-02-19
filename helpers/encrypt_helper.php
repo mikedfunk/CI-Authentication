@@ -50,8 +50,8 @@ function encrypt_this($password, $salt = '')
 	$hash = $salt . $hash;
 	
 	// set the session variable for the salt
-	// return $hash;
-	return $password;
+	return $hash;
+	// return $password;
 }
 
 // --------------------------------------------------------------------------
