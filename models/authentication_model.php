@@ -79,7 +79,7 @@ class authentication_model extends CI_Model
 			// $username = $password = 'test';
 			
 			// check password and return match
-			$this->db->where('password', $password);
+			$this->db->where(config_item('password_field'), $password);
 			$q = $this->db->get(config_item('users_table'));
 			if ($q->num_rows() == 0)
 			{
@@ -119,6 +119,32 @@ class authentication_model extends CI_Model
 	// --------------------------------------------------------------------------
 	
 	/**
+	 * confirm_string_check function.
+	 *
+	 * checks to make sure this username does not have a confirm string
+	 * 
+	 * @access public
+	 * @param mixed $username
+	 * @return bool
+	 */
+	public function confirm_string_check($username)
+	{
+		$this->db->where(config_item('username_field'), $username);
+		$this->db->where(config_item('confirm_string_field'), '');
+		$q = $this->db->get(config_item('users_table'));
+		if ($q->num_rows() > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
 	 * get_user_by_username function.
 	 *
 	 * returns the query for a user based on a passed username.
@@ -139,6 +165,7 @@ class authentication_model extends CI_Model
 			$this->db->select(
 				$ut . '.' . config_item('username_field') . ',' .
 				$ut . '.' . config_item('password_field') . ',' .
+				$ut . '.' . config_item('confirm_string_field') . ',' .
 				$rt . '.*,'
 			);
 			$this->db->join($rt, $rt . '.id = ' . $ut . '.' . config_item('role_id_field'), 'left');
@@ -146,6 +173,23 @@ class authentication_model extends CI_Model
 		
 		$this->db->where(config_item('username_field'), $username);
 		return $this->db->get($ut);
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * get_user_by_confirm_string function.
+	 *
+	 * returns the query for a user with the passed confirm string
+	 * 
+	 * @access public
+	 * @param mixed $confirm_string
+	 * @return void
+	 */
+	public function get_user_by_confirm_string($confirm_string)
+	{
+		$this->db->where(config_item('confirm_string_field'), $confirm_string);
+		return $this->db->get(config_item('users_table'));
 	}
 	
 	// --------------------------------------------------------------------------
@@ -163,6 +207,22 @@ class authentication_model extends CI_Model
 	{
 		$this->db->where('id', $post['id']);
 		return $this->db->update(config_item('users_table'), $post);
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * add_user function.
+	 *
+	 * adds a user passed via an array.
+	 * 
+	 * @access public
+	 * @param array $post
+	 * @return bool
+	 */
+	public function add_user($post)
+	{
+		return $this->db->insert(config_item('users_table'), $post);
 	}
 	
 	// --------------------------------------------------------------------------

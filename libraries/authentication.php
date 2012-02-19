@@ -96,11 +96,11 @@ class authentication
 	{
 		// set remember_me to 0 if not checked and there is post data
 		if (!$this->_ci->input->post(config_item('remember_me_field')) && $this->_ci->input->post() !== false)
-		{
+		{	
 			$_POST[config_item('remember_me_field')] = 0;
 		}
 		
-		// set remember_me cookie
+		// set remember_me checkbox cookie
 		$this->_ci->input->set_cookie(
 			config_item('remember_me_field'), 
 			$this->_ci->input->post(config_item('remember_me_field')), 
@@ -168,6 +168,100 @@ class authentication
 		if (!$check) {log_message('error', 'Authentication: error editing user during login.');}
 		
 		redirect($this->_ci->session->userdata(config_item('home_page_field')));
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * do_register function.
+	 *
+	 * adds user to db with updated/added values, emails the user, redirects.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function do_register()
+	{
+		// load resources
+		$this->_ci->load->model('authentication_model', 'auth_model');
+		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
+		
+		// set a new salt, encrypt the password, set a new confirm_string
+		$user = $this->_ci->input->post();
+		unset($user['confirm_password']);
+		$salt = random_string('alnum', config_item('salt_length'));
+		$user[config_item('role_id_field')] = config_item('user_role_id');
+		$user[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')), $salt);
+		$user[config_item('confirm_string_field')] = $confirm_string = random_string('alnum', 20);
+		
+		// add the user
+		$check = $this->_ci->auth_model->add_user($user);
+		
+		// email the user
+		$this->_ci->load->library('email');
+		$config['mailtype'] = 'html';
+		$this->_ci->email->initialize($config);
+
+		// from, to, url, content
+		$this->_ci->email->from(config_item('register_email_from'), config_item('register_email_from_name'));
+		$this->_ci->email->to($user[config_item('username_field')]); 
+		$data['confirm_register_url'] = base_url() . config_item('confirm_register_url') . '/' . $confirm_string;
+		$data['content'] = $msg = $this->_ci->load->view(config_item('email_register_view'), $data, TRUE);
+		
+		// wrap email in template if it exists
+		if (config_item('email_template_view') != '')
+		{
+			$msg = $this->_ci->load->view('email_template_view', $data, TRUE);
+		}
+		
+		// subject, msg, send
+		$this->_ci->email->subject(config_item('register_email_subject'));
+		$this->_ci->email->message($msg);
+		$this->_ci->email->send();
+		
+		// redirect to register_success view
+		redirect(config_item('register_success_url'));
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * do_confirm_register function.
+	 *
+	 * if confirm string matches, clears string from user and redirects to
+	 * configured url. Else redirects to configured fail url.
+	 * 
+	 * @access public
+	 * @param mixed $confirm_string
+	 * @return void
+	 */
+	public function do_confirm_register($confirm_string)
+	{
+		// check for user with confirm_string
+		$this->_ci->load->model('authentication_model', 'auth_model');
+		$this->_ci->load->helper('url');
+		$q = $this->_ci->auth_model->get_user_by_confirm_string($confirm_string);
+		
+		// on match
+		if ($q->num_rows > 0)
+		{	
+			// remove confirm string from user
+			$r = $q->row();
+			$user = array(
+				'id' => $r->id,
+				config_item('confirm_string_field') => ''
+			);
+			$this->_ci->auth_model->edit_user($user);
+			
+			// redirect to confirm success page
+			redirect(config_item('confirm_success_url'));
+		}
+		// on no match
+		else
+		{
+			// redirect to confirm fail page
+			redirect(config_item('confirm_fail_url'));
+		}
 	}
 
 	// --------------------------------------------------------------------------
