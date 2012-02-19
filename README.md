@@ -53,7 +53,30 @@ For the logout controller method, do this:
     
 It will destroy the session and redirect to the configured logged out url.
 
-To Do
+Do Register
 ----------------------------
 
-* Add method of signing up
+When form validation passes for registration, do this:
+
+    $this->load->library('authentication');
+    $this->authentication->do_register();
+    
+It will:
+
+1. unset confirm_password
+2. set a new salt and encrypt the password
+3. set the role id
+4. set a new confirm string
+5. add the user
+6. email the user with a confirm registration link (email view, template, from, subject, etc. are all configurable in authentication_config.php)
+7. redirect to the configured registration success url
+
+Do Confirm Register
+----------------------------
+
+You need to set a controller method for when a user clicks the confirmation link. In this method, just put this:
+
+    $this->load->library('authentication');
+    $this->authentication->do_confirm_register();
+
+It will check if a confirmation string exists for the passed string. If so, it will remove that string and redirect to the confirm_register_success_url. Otherwise it will redirect to the confirm_register_fail_url.

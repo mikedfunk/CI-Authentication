@@ -169,6 +169,27 @@ class authentication
 		
 		redirect($this->_ci->session->userdata(config_item('home_page_field')));
 	}
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * do_logout
+	 *
+	 * destroys session, redirects to configured url.
+	 *
+	 * Destroys the session
+	 *
+	 * @access public
+	 * @return bool
+	 */
+	public function do_logout()
+	{
+		$this->_ci->load->library('session');
+		$this->_ci->load->helper('url');
+		
+		$this->_ci->session->sess_destroy();
+		redirect(config_item('logout_success_url'));
+	}
 	
 	// --------------------------------------------------------------------------
 	
@@ -186,10 +207,12 @@ class authentication
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
 		
-		// set a new salt, encrypt the password, set a new confirm_string
+		// get user, unset confirm password, set salt
 		$user = $this->_ci->input->post();
 		unset($user['confirm_password']);
 		$salt = random_string('alnum', config_item('salt_length'));
+		
+		// set role_id, encrypt the password, set a new confirm_string
 		$user[config_item('role_id_field')] = config_item('user_role_id');
 		$user[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')), $salt);
 		$user[config_item('confirm_string_field')] = $confirm_string = random_string('alnum', 20);
@@ -262,27 +285,6 @@ class authentication
 			// redirect to confirm fail page
 			redirect(config_item('confirm_fail_url'));
 		}
-	}
-
-	// --------------------------------------------------------------------------
-
-	/**
-	 * do_logout
-	 *
-	 * destroys session, redirects to configured url.
-	 *
-	 * Destroys the session
-	 *
-	 * @access public
-	 * @return bool
-	 */
-	public function do_logout()
-	{
-		$this->_ci->load->library('session');
-		$this->_ci->load->helper('url');
-		
-		$this->_ci->session->sess_destroy();
-		redirect(config_item('logout_success_url'));
 	}
 	
 	// --------------------------------------------------------------------------
