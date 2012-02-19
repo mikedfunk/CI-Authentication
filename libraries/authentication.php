@@ -73,7 +73,8 @@ class authentication
 		// check for password match, else redirect
 		$chk = $this->_ci->auth_model->password_check(
 			$this->_ci->session->userdata(config_item('username_field')), 
-			$this->_ci->session->userdata(config_item('password_field'))
+			$this->_ci->session->userdata(config_item('password_field')),
+			true
 		);
 		
 		if (!$chk)
@@ -158,7 +159,7 @@ class authentication
 		
 		// set a new salt, re-encrypt the password
 		$salt = random_string('alnum', config_item('salt_length'));
-		$user[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')), $salt);
+		$user[config_item('password_field')] = $user_only[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')), $salt);
 		
 		// edit the user and set new userdata
 		$check = $this->_ci->auth_model->edit_user($user_only);

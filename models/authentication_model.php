@@ -54,9 +54,10 @@ class authentication_model extends CI_Model
 	 * @access public
 	 * @param string $username
 	 * @param string $password
+	 * @param bool $encrypted (default: false)
 	 * @return bool
 	 */
-	public function password_check($username, $password)
+	public function password_check($username, $password, $encrypted = false)
 	{	
 		// check for blanks
 		if ($username == '' || $password == '') { return false; }
@@ -75,10 +76,11 @@ class authentication_model extends CI_Model
 			$r = $q->row();
 			$salt = substr($r->password, 0, config_item('salt_length'));
 			$this->load->helper('encrypt_helper');
-			$password = encrypt_this($password, $salt);
-			// $username = $password = 'test';
+			
+			if (!$encrypted) { $password = encrypt_this($password, $salt); }
 			
 			// check password and return match
+			$this->db->where(config_item('username_field'), $username);
 			$this->db->where(config_item('password_field'), $password);
 			$q = $this->db->get(config_item('users_table'));
 			if ($q->num_rows() == 0)
