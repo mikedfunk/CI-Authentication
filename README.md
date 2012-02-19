@@ -80,9 +80,3 @@ You need to set a controller method for when a user clicks the confirmation link
     $this->authentication->do_confirm_register();
 
 It will check if a confirmation string exists for the passed string. If so, it will remove that string and redirect to the confirm_register_success_url. Otherwise it will redirect to the confirm_register_fail_url.
-
-To Do
-----------------------------
-
-1. Forgot password system
-2. Ability to re-send confirmation email
