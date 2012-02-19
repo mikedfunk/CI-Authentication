@@ -206,7 +206,7 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->model('authentication_model', 'auth_model');
-		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
+		$this->_ci->load->helper(array('encrypt_helper', 'string'));
 		
 		// get user, unset confirm password, set salt
 		$user = $this->_ci->input->post();
@@ -218,17 +218,61 @@ class authentication
 		$user[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')), $salt);
 		$user[config_item('confirm_string_field')] = $confirm_string = random_string('alnum', 20);
 		
-		// add the user
+		// add the user, send email, redirect.
 		$check = $this->_ci->auth_model->add_user($user);
+		$this->_send_register_email($user);
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * resend_register_email function.
+	 *
+	 * resends registration email based on confirm string
+	 * 
+	 * @access public
+	 * @param mixed $confirm_string
+	 * @return void
+	 */
+	public function resend_register_email($confirm_string)
+	{
+		// load resources
+		$this->_ci->load->model('authentication_model', 'auth_model');
+		
+		// get user and send email
+		$q = $this->_ci->auth_model->get_user_by_confirm_string($confirm_string);
+		if ($q->num_rows() > 0)
+		{
+			$user = $q->row_array();
+			$this->_send_register_email($user);
+		}
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * _send_register_email function.
+	 *
+	 * sends registration email to user, redirects.
+	 * 
+	 * @access private
+	 * @param mixed $user_array
+	 * @return void
+	 */
+	private function _send_register_email($user_array)
+	{
+		$this->_ci->load->helper('url');
+		$this->_ci->load->library('email');
 		
 		// email the user
-		$this->_ci->load->library('email');
 		$config['mailtype'] = 'html';
 		$this->_ci->email->initialize($config);
 
 		// from, to, url, content
 		$this->_ci->email->from(config_item('register_email_from'), config_item('register_email_from_name'));
-		$this->_ci->email->to($user[config_item('username_field')]); 
+		$this->_ci->email->to($user_array[config_item('username_field')]);
+		
+		$confirm_string = $user_array[config_item('confirm_string_field')];
 		$data['confirm_register_url'] = base_url() . config_item('confirm_register_url') . '/' . $confirm_string;
 		$data['content'] = $msg = $this->_ci->load->view(config_item('email_register_view'), $data, TRUE);
 		
