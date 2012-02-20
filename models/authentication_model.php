@@ -166,6 +166,7 @@ class authentication_model extends CI_Model
 		{
 			$this->db->select(
 				$rt . '.*,' .
+				$ut . '.id,' .
 				$ut . '.' . config_item('username_field') . ',' .
 				$ut . '.' . config_item('password_field') . ',' .
 				$ut . '.' . config_item('confirm_string_field') . ','
