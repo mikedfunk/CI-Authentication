@@ -435,6 +435,7 @@ class authentication
 		{
 			log_message('error', '------- MIKE -------> no match');
 			log_message('error', '------- MIKE -------> username: '.$this->_ci->encrypt->encode($username));
+			log_message('error', '------- MIKE -------> username 2: '.$this->_ci->encrypt->encode($username));
 			log_message('error', '------- MIKE -------> encrypt: '.$encrypted_username);
 			
 			
