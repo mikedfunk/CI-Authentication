@@ -341,7 +341,7 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'url'));
-		$this->_ci->load->library('email');
+		$this->_ci->load->library(array('email', 'encrypt'));
 		
 		// email reset password link
 
@@ -350,7 +350,7 @@ class authentication
 		$this->_ci->email->to($username);
 		
 		// set confirm reset url, content
-		$data['confirm_reset_url'] = base_url() . config_item('confirm_reset_url') . '?username=' . $username . '&string=' . encrypt_this($username);
+		$data['confirm_reset_url'] = base_url() . config_item('confirm_reset_url') . '?username=' . $username . '&string=' . $this->encrypt->encode($username);
 		$data['content'] = $msg = $this->_ci->load->view(config_item('email_request_reset_view'), $data, TRUE);
 		
 		// wrap email in template if it exists
@@ -382,11 +382,11 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->library('email');
+		$this->_ci->load->library(array('email', 'encrypt'));
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		
 		// check if username matches
-		if (encrypt_this($username) == $encrypted_username)
+		if ($this->encrypt->encode($username) == $encrypted_username)
 		{
 			// get user for id
 			$q = $this->auth_model->get_user_by_username($username);
@@ -398,7 +398,7 @@ class authentication
 				$data['new_password'] = $new_password = random_string('alnum', 8);
 				$update = array(
 					'id' => $user->id,
-					'password' => encrypt_this($new_password)
+					'password' => $this->encrypt->encode($new_password)
 				);
 				$this->auth_model->edit_user($update);
 				
