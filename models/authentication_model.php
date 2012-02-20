@@ -165,10 +165,10 @@ class authentication_model extends CI_Model
 		if ($join)
 		{
 			$this->db->select(
+				$rt . '.*,' .
 				$ut . '.' . config_item('username_field') . ',' .
 				$ut . '.' . config_item('password_field') . ',' .
-				$ut . '.' . config_item('confirm_string_field') . ',' .
-				$rt . '.*,'
+				$ut . '.' . config_item('confirm_string_field') . ','
 			);
 			$this->db->join($rt, $rt . '.id = ' . $ut . '.' . config_item('role_id_field'), 'left');
 		}
