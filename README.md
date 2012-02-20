@@ -123,6 +123,6 @@ Do Confirm Reset Password
 You need to set a controller method for when a user clicks the reset password confirmation link. In this method, just put this:
 
     $this->load->library('authentication');
-    $this->authentication->do_request_reset_password($username, $encrypted_username);
+    $this->authentication->do_request_reset_password();
 
-You will need to pass the ```$username``` variable. You should get this from . This method will email a password link with an encrypted string based on the email address. The user must click this link to confirm they want to reset their password. This prevents passwords being reset without the user's consent.
+This method will retrieve the username and encrypted string via $_GET variables. It will make sure the encrypted username matches the encrypted string, make sure a user exists with that username, set a new random password, email it to the user, update the user in the database with the new password (salted and encrypted), and redirect to the configured page.
