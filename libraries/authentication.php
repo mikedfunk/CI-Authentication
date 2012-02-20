@@ -350,7 +350,7 @@ class authentication
 		$this->_ci->email->to($username);
 		
 		// set confirm reset url, content
-		$data['confirm_reset_url'] = base_url() . config_item('confirm_reset_url') . '/' . $username . '/' . encrypt_this($username);
+		$data['confirm_reset_url'] = base_url() . config_item('confirm_reset_url') . '?username=' . $username . '&string=' . encrypt_this($username);
 		$data['content'] = $msg = $this->_ci->load->view(config_item('email_request_reset_view'), $data, TRUE);
 		
 		// wrap email in template if it exists
@@ -364,9 +364,6 @@ class authentication
 		$this->_ci->email->message($msg);
 		$this->_ci->email->send();
 		
-		log_message('error', '------- MIKE -------> email: '.$this->_ci->email->print_debugger());
-		
-		
 		// redirect
 		redirect(config_item('request_reset_success_url'));
 	}
@@ -377,11 +374,11 @@ class authentication
 	 * do_confirm_reset_password function.
 	 * 
 	 * @access public
-	 * @param mixed $urlencoded_username
+	 * @param mixed $username
 	 * @param mixed $encrypted_username
 	 * @return void
 	 */
-	public function do_confirm_reset_password($urlencoded_username, $encrypted_username)
+	public function do_confirm_reset_password($username, $encrypted_username)
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
@@ -389,7 +386,6 @@ class authentication
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		
 		// check if username matches
-		$username = $urlencoded_username;
 		if (encrypt_this($username) == $encrypted_username)
 		{
 			// get user for id
