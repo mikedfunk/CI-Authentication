@@ -107,19 +107,25 @@ $config['salt_length'] = 64;
 
 // --------------------------------------------------------------------------
 /**
- * register_email_from
+ * email from addresses
  *
- * the reply-to email address for registration emails
+ * the reply-to email address for registration emails and others
  */
-$config['register_email_from'] = 'noreply@test.com';
+$config['register_email_from'] =
+$config['request_reset_email_from'] =
+$config['confirm_reset_email_from'] =
+ 'noreply@test.com';
 
 // --------------------------------------------------------------------------
 /**
- * register_email_from_name (optional)
+ * email from names (optional)
  *
- * the reply-to email address name for registration emails
+ * the reply-to email address name for registration emails and others
  */
-$config['register_email_from_name'] = 'Bookymark';
+$config['register_email_from_name'] = 
+$config['request_reset_email_from_name'] =
+$config['confirm_reset_email_from_name'] =
+= 'Bookymark';
 
 // --------------------------------------------------------------------------
 /**
@@ -131,11 +137,43 @@ $config['register_email_subject'] = 'Registration';
 
 // --------------------------------------------------------------------------
 /**
+ * request_reset_email_subject
+ *
+ * the reply-to email address for request reset password email
+ */
+$config['request_reset_email_subject'] = 'Bookymark.com: Request for password reset';
+
+// --------------------------------------------------------------------------
+/**
+ * confirm_reset_email_subject
+ *
+ * the reply-to email address for confirm reset password email
+ */
+$config['request_reset_email_subject'] = 'Bookymark.com: New password';
+
+// --------------------------------------------------------------------------
+/**
  * email_register_view
  *
  * the inner view used for sending registration emails
  */
 $config['email_register_view'] = 'email_register_view';
+
+// --------------------------------------------------------------------------
+/**
+ * email_request_reset_view
+ *
+ * the inner view used for sending registration emails
+ */
+$config['email_request_reset_view'] = 'email_request_reset_view';
+
+// --------------------------------------------------------------------------
+/**
+ * email_confirm_reset_view
+ *
+ * the inner view used for sending registration emails
+ */
+$config['email_confirm_reset_view'] = 'email_confirm_reset_view';
 
 // --------------------------------------------------------------------------
 /**
@@ -193,6 +231,30 @@ $config['confirm_success_url'] = 'home/login?notification=confirm_success';
  * where to redirect on confirm fail
  */
 $config['confirm_fail_url'] = 'home/login?notification=confirm_fail';
+
+// --------------------------------------------------------------------------
+/**
+ * confirm reset password url
+ *
+ * the url for the reset password link. Without the trailing slash.
+ */
+$config['confirm_reset_url'] = 'home/confirm_reset_password';
+
+// --------------------------------------------------------------------------
+/**
+ * request_reset_success_url
+ *
+ * where to redirect on request reset password
+ */
+$config['request_reset_success_url'] = 'home/request_reset_success';
+
+// --------------------------------------------------------------------------
+/**
+ * confirm_reset_success_url
+ *
+ * where to redirect on confirm reset password
+ */
+$config['confirm_reset_success_url'] = 'home/login?notification=confirm_reset_success';
 
 // --------------------------------------------------------------------------
 /* End of file authentication_config.php */

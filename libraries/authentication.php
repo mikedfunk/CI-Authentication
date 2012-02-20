@@ -264,10 +264,6 @@ class authentication
 		$this->_ci->load->helper('url');
 		$this->_ci->load->library('email');
 		
-		// email the user
-		$config['mailtype'] = 'html';
-		$this->_ci->email->initialize($config);
-
 		// from, to, url, content
 		$this->_ci->email->from(config_item('register_email_from'), config_item('register_email_from_name'));
 		$this->_ci->email->to($user_array[config_item('username_field')]);
@@ -329,6 +325,107 @@ class authentication
 		{
 			// redirect to confirm fail page
 			redirect(config_item('confirm_fail_url'));
+		}
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * do_request_reset_password function.
+	 * 
+	 * @access public
+	 * @param mixed $username
+	 * @return void
+	 */
+	public function do_request_reset_password($username)
+	{
+		// load resources
+		$this->_ci->load->helper(array('encrypt_helper', 'url'));
+		$this->_ci->load->library('email');
+		
+		// email reset password link
+
+		// from, to, url, content
+		$this->_ci->email->from(config_item('request_reset_email_from'), config_item('request_reset_email_from_name'));
+		$this->_ci->email->to($user_array[config_item('username_field')]);
+		
+		// set confirm reset url, content
+		$data['confirm_reset_url'] = base_url() . config_item('confirm_reset_url') . '/' . urlencode($username) . '/' . encrypt_this($username);
+		$data['content'] = $msg = $this->_ci->load->view(config_item('email_request_reset_view'), $data, TRUE);
+		
+		// wrap email in template if it exists
+		if (config_item('email_template_view') != '')
+		{
+			$msg = $this->_ci->load->view(config_item('email_template_view'), $data, TRUE);
+		}
+		
+		// subject, msg, send
+		$this->_ci->email->subject(config_item('request_reset_email_subject'));
+		$this->_ci->email->message($msg);
+		$this->_ci->email->send();
+		
+		// redirect
+		redirect(config_item('request_reset_success_url'));
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * do_confirm_reset_password function.
+	 * 
+	 * @access public
+	 * @param mixed $urlencoded_username
+	 * @param mixed $encrypted_username
+	 * @return void
+	 */
+	public function do_confirm_reset_password($urlencoded_username, $encrypted_username)
+	{
+		// load resources
+		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
+		$this->_ci->load->library('email');
+		$this->_ci->load->model('authentication_model', 'auth_model');
+		
+		// check if username matches
+		$username = urldecode($urlencoded_username);
+		if (encrypt_this($username) == $encrypted_username)
+		{
+			// get user for id
+			$q = $this->auth_model->get_user_by_username($username);
+			
+			if ($q->num_rows() > 0)
+			{
+				// set new password, update user
+				$user = $q->row();
+				$data['new_password'] = $new_password = random_string('alnum', 8);
+				$update = array(
+					'id' => $user->id,
+					'password' => encrypt_this($new_password)
+				);
+				$this->auth_model->edit_user($update);
+				
+				// email new password
+		
+				// from, to, url, content
+				$this->_ci->email->from(config_item('confirm_reset_email_from'), config_item('confirm_reset_email_from_name'));
+				$this->_ci->email->to($user_array[config_item('username_field')]);
+				
+				// set confirm reset url, content
+				$data['content'] = $msg = $this->_ci->load->view(config_item('email_confirm_reset_view'), '', TRUE);
+				
+				// wrap email in template if it exists
+				if (config_item('email_template_view') != '')
+				{
+					$msg = $this->_ci->load->view(config_item('email_template_view'), $data, TRUE);
+				}
+				
+				// subject, msg, send
+				$this->_ci->email->subject(config_item('confirm_reset_email_subject'));
+				$this->_ci->email->message($msg);
+				$this->_ci->email->send();
+				
+				// redirect
+				redirect(config_item('confirm_reset_success_url'));
+			}
 		}
 	}
 	
