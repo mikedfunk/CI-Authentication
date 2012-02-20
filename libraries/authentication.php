@@ -150,6 +150,10 @@ class authentication
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
 		$this->_ci->load->library('session');
 		
+		// unset temporary password and confirm password fields
+		unset($_POST['confirm_password']);
+		unset($_POST['temp_password']);
+		
 		// set session vars, redirect to admin home
 		$q = $this->_ci->auth_model->get_user_by_username($this->_ci->input->post(config_item('username_field')));
 		$user = $q->row_array();

@@ -222,7 +222,7 @@ $config['confirm_register_url'] = 'home/confirm_register';
  *
  * where to redirect on confirm success
  */
-$config['confirm_success_url'] = 'home/login?notification=confirm_success';
+$config['confirm_success_url'] = 'home/login_new_password';
 
 // --------------------------------------------------------------------------
 /**
