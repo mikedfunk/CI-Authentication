@@ -384,16 +384,18 @@ class authentication
 	 * do_confirm_reset_password function.
 	 * 
 	 * @access public
-	 * @param mixed $username
-	 * @param mixed $encrypted_username
 	 * @return void
 	 */
-	public function do_confirm_reset_password($username, $encrypted_username)
+	public function do_confirm_reset_password()
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
 		$this->_ci->load->library('email');
 		$this->_ci->load->model('authentication_model', 'auth_model');
+		
+		// get username and encrypted_username
+		$username = $this->input->get(config_item('username'));
+		$encrypted_username = $this->input->get('string');
 		
 		// check if username matches
 		if (encrypt_this($username, $username[0]) == $encrypted_username)
