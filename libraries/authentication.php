@@ -425,6 +425,16 @@ class authentication
 				// redirect
 				redirect(config_item('confirm_reset_success_url'));
 			}
+			else
+			{
+				log_message('error', '------- MIKE -------> no rows');
+				
+			}
+		}
+		else
+		{
+			log_message('error', '------- MIKE -------> no match');
+			
 		}
 	}
 	
