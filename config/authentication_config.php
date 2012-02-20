@@ -125,7 +125,7 @@ $config['confirm_reset_email_from'] =
 $config['register_email_from_name'] = 
 $config['request_reset_email_from_name'] =
 $config['confirm_reset_email_from_name'] =
-= 'Bookymark';
+'Bookymark';
 
 // --------------------------------------------------------------------------
 /**
