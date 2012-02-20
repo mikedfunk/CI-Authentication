@@ -395,10 +395,11 @@ class authentication
 			{
 				// set new password, update user
 				$user = $q->row();
+				$salt = random_string('alnum', config_item('salt_length'));
 				$data['new_password'] = $new_password = random_string('alnum', 8);
 				$update = array(
 					'id' => $user->id,
-					'password' => encrypt_this($new_password)
+					'password' => encrypt_this($new_password, $salt)
 				);
 				$this->_ci->auth_model->edit_user($update);
 				
