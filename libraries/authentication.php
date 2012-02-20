@@ -356,7 +356,7 @@ class authentication
 		$this->_ci->email->to($username);
 		
 		// set confirm reset url, content
-		$data['confirm_reset_url'] = base_url() . config_item('confirm_reset_url') . '?username=' . $username . '&string=' . encrypt_this($username, $username[0]);
+		$data['confirm_reset_url'] = base_url() . config_item('confirm_reset_url') . '?' . config_item('username_field') . '=' . $username . '&string=' . encrypt_this($username, $username[0]);
 		$data['content'] = $msg = $this->_ci->load->view(config_item('email_request_reset_view'), $data, TRUE);
 		
 		// wrap email in template if it exists
