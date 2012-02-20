@@ -17,7 +17,7 @@ Setup
 Restrict
 ----------------------------
 
-At the top of a CI controller method or in ```_remap()``` do this:
+At the top of a CI controller method or in ```__construct()``` do this:
 
     $this->load->library('authentication');
     $this->authentication->restrict_access();
