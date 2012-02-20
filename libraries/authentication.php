@@ -389,7 +389,7 @@ class authentication
 		if (encrypt_this($username, $username[0]) == $encrypted_username)
 		{
 			// get user for id
-			$q = $this->auth_model->get_user_by_username($username);
+			$q = $this->_ci->auth_model->get_user_by_username($username);
 			
 			if ($q->num_rows() > 0)
 			{
@@ -400,7 +400,7 @@ class authentication
 					'id' => $user->id,
 					'password' => encrypt_this($new_password)
 				);
-				$this->auth_model->edit_user($update);
+				$this->_ci->auth_model->edit_user($update);
 				
 				// email new password
 		
