@@ -406,7 +406,8 @@ class authentication
 		
 				// from, to, url, content
 				$this->_ci->email->from(config_item('confirm_reset_email_from'), config_item('confirm_reset_email_from_name'));
-				$this->_ci->email->to($user_array[config_item('username_field')]);
+				$username_field = config_item('username_field');
+				$this->_ci->email->to($user->$username_field);
 				
 				// set confirm reset url, content
 				$data['content'] = $msg = $this->_ci->load->view(config_item('email_confirm_reset_view'), '', TRUE);
@@ -427,14 +428,12 @@ class authentication
 			}
 			else
 			{
-				log_message('error', '------- MIKE -------> no rows');
-				
+				log_message('error', 'Authentication: confirm reset password link with user not found in database.');
 			}
 		}
 		else
 		{
-			log_message('error', '------- MIKE -------> no match');
-			
+			log_message('error', 'Authentication: confirm reset password link with non-matching username and encrypted username.');
 		}
 	}
 	
