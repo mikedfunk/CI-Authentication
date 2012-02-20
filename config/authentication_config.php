@@ -149,7 +149,7 @@ $config['request_reset_email_subject'] = 'Bookymark.com: Request for password re
  *
  * the reply-to email address for confirm reset password email
  */
-$config['request_reset_email_subject'] = 'Bookymark.com: New password';
+$config['confirm_reset_email_subject'] = 'Bookymark.com: New password';
 
 // --------------------------------------------------------------------------
 /**

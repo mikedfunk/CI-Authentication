@@ -410,7 +410,7 @@ class authentication
 				$this->_ci->email->to($user->$username_field);
 				
 				// set confirm reset url, content
-				$data['content'] = $msg = $this->_ci->load->view(config_item('email_confirm_reset_view'), '', TRUE);
+				$data['content'] = $msg = $this->_ci->load->view(config_item('email_confirm_reset_view'), $data, TRUE);
 				
 				// wrap email in template if it exists
 				if (config_item('email_template_view') != '')
