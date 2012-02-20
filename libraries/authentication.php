@@ -246,6 +246,10 @@ class authentication
 			$user = $q->row_array();
 			$this->_send_register_email($user);
 		}
+		else
+		{
+			log_message('error', 'Authentication: resend register email: confirm string found.');
+		}
 	}
 	
 	// --------------------------------------------------------------------------
@@ -323,6 +327,8 @@ class authentication
 		// on no match
 		else
 		{
+			log_message('error', 'Authentication: confirm register fail.');
+			
 			// redirect to confirm fail page
 			redirect(config_item('confirm_fail_url'));
 		}
@@ -402,16 +408,6 @@ class authentication
 					'password' => encrypt_this($new_password, $salt)
 				);
 				$this->_ci->auth_model->edit_user($update);
-				
-				log_message('error', '------- MIKE -------> user: '.print_r($user, TRUE));
-				log_message('error', '------- MIKE -------> num rows: '.$q->num_rows());
-				log_message('error', '------- MIKE -------> email: '.$username);
-				
-				
-				log_message('error', '------- MIKE -------> encrypted: '.encrypt_this($new_password, $salt));
-				
-				
-				
 				
 				// email new password
 		
