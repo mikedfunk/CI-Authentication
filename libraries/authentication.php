@@ -364,7 +364,7 @@ class authentication
 		$this->_ci->email->message($msg);
 		$this->_ci->email->send();
 		
-		log_message('error', '------- MIKE -------> email: '.$this->email->print_debugger());
+		log_message('error', '------- MIKE -------> email: '.$this->_ci->email->print_debugger());
 		
 		
 		// redirect
