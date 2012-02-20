@@ -403,6 +403,13 @@ class authentication
 				);
 				$this->_ci->auth_model->edit_user($update);
 				
+				log_message('error', '------- MIKE -------> new pass: '.$new_password);
+				log_message('error', '------- MIKE -------> salt: '.$salt);
+				log_message('error', '------- MIKE -------> encrypted: '.encrypt_this($new_password, $salt));
+				
+				
+				
+				
 				// email new password
 		
 				// from, to, url, content
