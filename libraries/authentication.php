@@ -70,7 +70,7 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->model('authentication_model', 'auth_model');
-		$this->_ci->load->library('session');
+		$this->_ci->load->library(array('alerts', 'session'));
 		$this->_ci->load->helper('url');
 			
 		// check for password match, else redirect
@@ -82,6 +82,7 @@ class authentication
 		
 		if (!$chk)
 		{
+			$this->alerts->set_error(config_item('logged_out_message'));
 			redirect(config_item('logged_out_url'));
 		}
 		
@@ -90,6 +91,7 @@ class authentication
 		{
 			if(!$this->_ci->session->userdata($condition))
 			{
+				$this->alerts->set_error(config_item('access_denied_message'));
 				redirect(config_item('access_denied_url'));
 			}
 		}
@@ -160,7 +162,7 @@ class authentication
 	{
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->library('session');
+		$this->_ci->load->library(array('session', 'alerts'));
 		
 		// unset temporary password and confirm password fields
 		unset($_POST['confirm_password']);
@@ -184,6 +186,7 @@ class authentication
 		// log errors
 		if (!$check) {log_message('error', 'Authentication: error editing user during login.');}
 		
+		$this->alerts->set_success(config_item('logged_in_message'));
 		redirect($this->_ci->session->userdata(config_item('home_page_field')));
 	}
 
@@ -201,10 +204,11 @@ class authentication
 	 */
 	public function do_logout()
 	{
-		$this->_ci->load->library('session');
+		$this->_ci->load->library(array('session', 'alerts'));
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
+		$this->alerts->set_success(config_item('logged_out_message'));
 		redirect(config_item('logout_success_url'));
 	}
 	
@@ -282,7 +286,7 @@ class authentication
 	private function _send_register_email($user_array)
 	{
 		$this->_ci->load->helper('url');
-		$this->_ci->load->library('email');
+		$this->_ci->load->library(array('email', 'session', 'alerts'));
 		
 		// from, to, url, content
 		$this->_ci->email->from(config_item('register_email_from'), config_item('register_email_from_name'));
@@ -304,6 +308,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect to register_success view
+		$this->alerts->set_success(config_item('register_success_message'));
 		redirect(config_item('register_success_url'));
 	}
 	
@@ -324,6 +329,7 @@ class authentication
 		// check for user with confirm_string
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		$this->_ci->load->helper('url');
+		$this->_ci->load->library(array('session', 'alerts'));
 		$q = $this->_ci->auth_model->get_user_by_confirm_string($confirm_string);
 		
 		// on match
@@ -338,7 +344,8 @@ class authentication
 			$this->_ci->auth_model->edit_user($user);
 			
 			// redirect to confirm success page
-			redirect(config_item('confirm_success_url'));
+			$this->alerts->set_success(config_item('confirm_register_success_message'));
+			redirect(config_item('confirm_register_success_url'));
 		}
 		// on no match
 		else
@@ -346,7 +353,8 @@ class authentication
 			log_message('error', 'Authentication: confirm register fail.');
 			
 			// redirect to confirm fail page
-			redirect(config_item('confirm_fail_url'));
+			$this->alerts->set_error(config_item('confirm_register_fail_message'));
+			redirect(config_item('confirm_register_fail_url'));
 		}
 	}
 	
@@ -363,7 +371,7 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'url'));
-		$this->_ci->load->library('email');
+		$this->_ci->load->library(array('email', 'session', 'alerts'));
 		
 		// email reset password link
 
@@ -387,6 +395,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect
+		$this->alerts->set_success(config_item('request_reset_success_message'));
 		redirect(config_item('request_reset_success_url'));
 	}
 	
@@ -402,7 +411,7 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->library('email');
+		$this->_ci->load->library(array('email', 'session', 'alerts'));
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		
 		// get username and encrypted_username
@@ -449,6 +458,7 @@ class authentication
 				$this->_ci->email->send();
 				
 				// redirect
+				$this->alerts->set_success(config_item('confirm_reset_success_message'));
 				redirect(config_item('confirm_reset_success_url'));
 			}
 			else

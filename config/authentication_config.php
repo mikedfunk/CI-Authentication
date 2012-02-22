@@ -189,7 +189,7 @@ $config['email_template_view'] = 'email_template_view';
  *
  * where to redirect when login_check fails
  */
-$config['logged_out_url'] = 'home/login?notification=logged_out';
+$config['logged_out_url'] = 'home/login';
 
 // --------------------------------------------------------------------------
 /**
@@ -197,7 +197,7 @@ $config['logged_out_url'] = 'home/login?notification=logged_out';
  *
  * where to redirect on logout
  */
-$config['logout_success_url'] = 'home/login?notification=logout_success';
+$config['logout_success_url'] = 'home/login';
 
 // --------------------------------------------------------------------------
 /**
@@ -205,7 +205,7 @@ $config['logout_success_url'] = 'home/login?notification=logout_success';
  *
  * where to redirect on register success
  */
-$config['register_success_url'] = 'home/register_success';
+$config['register_success_url'] = 'notify';
 
 // --------------------------------------------------------------------------
 /**
@@ -218,19 +218,19 @@ $config['confirm_register_url'] = 'home/confirm_register';
 
 // --------------------------------------------------------------------------
 /**
- * confirm_success_url
+ * confirm_register_success_url
  *
  * where to redirect on confirm success
  */
-$config['confirm_success_url'] = 'home/login_new_password';
+$config['confirm_register_success_url'] = 'home/login_new_password';
 
 // --------------------------------------------------------------------------
 /**
- * confirm_fail_url
+ * confirm_register_fail_url
  *
  * where to redirect on confirm fail
  */
-$config['confirm_fail_url'] = 'home/login?notification=confirm_fail';
+$config['confirm_register_fail_url'] = 'home/login';
 
 // --------------------------------------------------------------------------
 /**
@@ -246,7 +246,7 @@ $config['confirm_reset_url'] = 'home/confirm_reset_password';
  *
  * where to redirect on request reset password
  */
-$config['request_reset_success_url'] = 'home/request_reset_success';
+$config['request_reset_success_url'] = 'notify';
 
 // --------------------------------------------------------------------------
 /**
@@ -254,7 +254,7 @@ $config['request_reset_success_url'] = 'home/request_reset_success';
  *
  * where to redirect on confirm reset password
  */
-$config['confirm_reset_success_url'] = 'home/login?notification=confirm_reset_success';
+$config['confirm_reset_success_url'] = 'home/login';
 
 // --------------------------------------------------------------------------
 /**
@@ -262,7 +262,75 @@ $config['confirm_reset_success_url'] = 'home/login?notification=confirm_reset_su
  *
  * where to redirect when a user reaches a page they do not have access to
  */
-$config['access_denied_url'] = 'home/access_denied';
+$config['access_denied_url'] = 'notify';
+
+// --------------------------------------------------------------------------
+/**
+ * logged_out_message
+ *
+ * the notification to save to flashdata when logged out
+ */
+$config['logged_out_message'] = 'Please log in to continue.';
+
+// --------------------------------------------------------------------------
+/**
+ * access_denied_message
+ *
+ * the notification to save to flashdata when access is denied
+ */
+$config['access_denied_message'] = 'You do not have access to view this page.';
+
+// --------------------------------------------------------------------------
+/**
+ * logged_in_message
+ *
+ * the notification to save to flashdata when user logs in
+ */
+$config['logged_in_message'] = 'You have been logged in.';
+
+// --------------------------------------------------------------------------
+/**
+ * logged_out_message
+ *
+ * the notification to save to flashdata when user logs out
+ */
+$config['logged_out_message'] = 'You have been logged out.';
+
+// --------------------------------------------------------------------------
+/**
+ * confirm_register_success_message
+ *
+ * the notification to save to flashdata when user succeeds in verifying
+ *  registration request
+ */
+$config['confirm_register_success_message'] = 'Registration confirmed. Please login.';
+
+// --------------------------------------------------------------------------
+/**
+ * confirm_register_fail_message
+ *
+ * the notification to save to flashdata when user fails in verifying
+ * registration request
+ */
+$config['confirm_register_fail_message'] = 'Registration confirmation failed. Please try logging in. If that does not work, please try registering again.';
+
+// --------------------------------------------------------------------------
+/**
+ * request_reset_success_message
+ *
+ * the notification to save to flashdata when user succeeds in requesting a
+ * new password
+ */
+$config['confirm_register_fail_message'] = 'A confirmation has been sent to your email address. Please click the link there to reset your password.';
+
+// --------------------------------------------------------------------------
+/**
+ * confirm_reset_success_message
+ *
+ * the notification to save to flashdata when user succeeds in confirming a
+ * new password
+ */
+$config['confirm_register_fail_message'] = 'Password reset. Your new password has been emailed to you. Please retrieve it and login.';
 
 // --------------------------------------------------------------------------
 /* End of file authentication_config.php */
