@@ -21,7 +21,9 @@ At the top of a CI controller method or in ```__construct()``` do this:
     $this->load->library('authentication');
     $this->authentication->restrict_access();
 
-It will redirect to ```home/login?notification=logged_out``` by default. You can change this in the config.
+It will redirect to the config_item for logged_out_url.
+
+You can also add a parameter to restrict access to pages based on permissions for that role. For instance ```$this->authentication->restrict_access('can_edit_pages')```. It checks the session for this variable. If it's false it will redirect to the config item access_denied_url.
 
 ----------------------------
 
