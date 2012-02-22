@@ -415,8 +415,8 @@ class authentication
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		
 		// get username and encrypted_username
-		$username = $this->input->get(config_item('username'));
-		$encrypted_username = $this->input->get('string');
+		$username = $this->_ci->input->get(config_item('username'));
+		$encrypted_username = $this->_ci->input->get('string');
 		
 		// check if username matches
 		if (encrypt_this($username, $username[0]) == $encrypted_username)
