@@ -469,6 +469,8 @@ class authentication
 		else
 		{
 			log_message('error', 'Authentication: confirm reset password link with non-matching username and encrypted username.');
+			log_message('error', '------- MIKE -------> just encrypted: '.encrypt_this($username, $username[0]));
+			log_message('error', '------- MIKE -------> stored: '.$encrypted_username);
 		}
 	}
 	
