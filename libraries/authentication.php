@@ -73,14 +73,6 @@ class authentication
 		$this->_ci->load->library('session');
 		$this->_ci->load->helper('url');
 			
-		// if condition, only checking for condition set in session
-		if ($condition != '')
-		{
-			if(!$this->_ci->session->userdata($condition))
-			{
-				redirect(config_item('access_denied_url'));
-			}
-		}
 		// check for password match, else redirect
 		$chk = $this->_ci->auth_model->password_check(
 			$this->_ci->session->userdata(config_item('username_field')), 
@@ -91,6 +83,15 @@ class authentication
 		if (!$chk)
 		{
 			redirect(config_item('logged_out_url'));
+		}
+		
+		// if condition, only checking for condition set in session
+		if ($condition != '')
+		{
+			if(!$this->_ci->session->userdata($condition))
+			{
+				redirect(config_item('access_denied_url'));
+			}
 		}
 	}
 	
