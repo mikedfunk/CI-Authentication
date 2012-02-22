@@ -92,6 +92,7 @@ class authentication
 			if(!$this->_ci->session->userdata($condition))
 			{
 				$this->_ci->alerts->set_error(config_item('access_denied_message'));
+				$this->_ci->session->set_flashdata('alert_page_title', 'Access Denied');
 				redirect(config_item('access_denied_url'));
 			}
 		}
@@ -308,7 +309,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect to register_success view
-		$this->_ci->alerts->set_success(config_item('register_success_message'));
+		$this->_ci->alerts->set_success(config_item('register_success_message'), config_item('register_success_title'));
 		redirect(config_item('register_success_url'));
 	}
 	

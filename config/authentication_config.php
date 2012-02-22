@@ -307,6 +307,14 @@ $config['register_success_message'] = 'A confirmation has been sent to your emai
 
 // --------------------------------------------------------------------------
 /**
+ * register_success_title
+ *
+ * saves to flashdata alert_page_title
+ */
+$config['register_success_title'] = 'Almost Done!';
+
+// --------------------------------------------------------------------------
+/**
  * confirm_register_success_message
  *
  * the notification to save to flashdata when user succeeds in verifying
