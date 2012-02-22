@@ -415,7 +415,7 @@ class authentication
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		
 		// get username and encrypted_username
-		$username = $this->_ci->input->get(config_item('username'));
+		$username = $this->_ci->input->get(config_item('username_field'));
 		$encrypted_username = $this->_ci->input->get('string');
 		
 		// check if username matches
@@ -469,8 +469,6 @@ class authentication
 		else
 		{
 			log_message('error', 'Authentication: confirm reset password link with non-matching username and encrypted username.');
-			log_message('error', '------- MIKE -------> just encrypted: '.encrypt_this($username, $username[0]));
-			log_message('error', '------- MIKE -------> stored: '.$encrypted_username);
 		}
 	}
 	
