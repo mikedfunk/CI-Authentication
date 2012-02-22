@@ -11,8 +11,6 @@ Setup
 2. Update submodules: ```git submodule update --init```
 3. Add this to the ```$autoload['packages']``` array in **application/config/autoload.php**:  ```APPPATH.'third_party/authentication', APPPATH.'third_party/authentication/third_party/alerts', ```
 4. Import **setup.sql** in PHPMyAdmin or something
-5. Add a user row
-6. Add a role row
 7. Edit **config/authentication_config.php** with the proper stuff like redirect urls, etc.
 
 Restrict
