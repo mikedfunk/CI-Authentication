@@ -110,6 +110,9 @@ class authentication
 	 */
 	public function remember_me()
 	{
+		// set output buffering so we don't get header already sent errors in testing
+		if (ENVIRONMENT == 'testing') { ob_start(); }
+		
 		// set remember_me to 0 if not checked and there is post data
 		if (!$this->_ci->input->post(config_item('remember_me_field')) && $this->_ci->input->post() !== false)
 		{	
@@ -146,6 +149,7 @@ class authentication
 			$this->_ci->input->set_cookie(config_item('username_field'), '', time() -1);
 			$this->_ci->input->set_cookie(config_item('password_field'), '', time() -1);
 		}
+		if (ENVIRONMENT == 'testing') { ob_end_clean(); }
 	}
 	
 	// --------------------------------------------------------------------------
