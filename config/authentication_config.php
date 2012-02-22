@@ -157,7 +157,7 @@ $config['confirm_reset_email_subject'] = 'Bookymark.com: New password';
  *
  * the inner view used for sending registration emails
  */
-$config['email_register_view'] = 'email_register_view';
+$config['email_register_view'] = 'email/email_register_view';
 
 // --------------------------------------------------------------------------
 /**
@@ -165,7 +165,7 @@ $config['email_register_view'] = 'email_register_view';
  *
  * the inner view used for sending registration emails
  */
-$config['email_request_reset_view'] = 'email_request_reset_view';
+$config['email_request_reset_view'] = 'email/email_request_reset_view';
 
 // --------------------------------------------------------------------------
 /**
@@ -173,7 +173,7 @@ $config['email_request_reset_view'] = 'email_request_reset_view';
  *
  * the inner view used for sending registration emails
  */
-$config['email_confirm_reset_view'] = 'email_confirm_reset_view';
+$config['email_confirm_reset_view'] = 'email/email_confirm_reset_view';
 
 // --------------------------------------------------------------------------
 /**
@@ -181,7 +181,7 @@ $config['email_confirm_reset_view'] = 'email_confirm_reset_view';
  *
  * the outer view used for sending registration emails
  */
-$config['email_template_view'] = 'email_template_view';
+$config['email_template_view'] = 'email/email_template_view';
 
 // --------------------------------------------------------------------------
 /**
@@ -298,6 +298,15 @@ $config['logged_out_message'] = 'You have been logged out.';
 
 // --------------------------------------------------------------------------
 /**
+ * register_success_message
+ *
+ * the notification to save to flashdata when user succeeds in verifying
+ *  registration request
+ */
+$config['register_success_message'] = 'A confirmation has been sent to your email address. Please click the link there to continue.';
+
+// --------------------------------------------------------------------------
+/**
  * confirm_register_success_message
  *
  * the notification to save to flashdata when user succeeds in verifying
@@ -321,7 +330,7 @@ $config['confirm_register_fail_message'] = 'Registration confirmation failed. Pl
  * the notification to save to flashdata when user succeeds in requesting a
  * new password
  */
-$config['confirm_register_fail_message'] = 'A confirmation has been sent to your email address. Please click the link there to reset your password.';
+$config['request_reset_success_message'] = 'A confirmation has been sent to your email address. Please click the link there to reset your password.';
 
 // --------------------------------------------------------------------------
 /**
@@ -330,7 +339,7 @@ $config['confirm_register_fail_message'] = 'A confirmation has been sent to your
  * the notification to save to flashdata when user succeeds in confirming a
  * new password
  */
-$config['confirm_register_fail_message'] = 'Password reset. Your new password has been emailed to you. Please retrieve it and login.';
+$config['confirm_reset_success_message'] = 'Password reset. Your new password has been emailed to you. Please retrieve it and login.';
 
 // --------------------------------------------------------------------------
 /* End of file authentication_config.php */

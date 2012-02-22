@@ -299,7 +299,7 @@ class authentication
 		// wrap email in template if it exists
 		if (config_item('email_template_view') != '')
 		{
-			$msg = $this->_ci->load->view('email_template_view', $data, TRUE);
+			$msg = $this->_ci->load->view(config_item('email_template_view'), $data, TRUE);
 		}
 		
 		// subject, msg, send
