@@ -257,5 +257,13 @@ $config['request_reset_success_url'] = 'home/request_reset_success';
 $config['confirm_reset_success_url'] = 'home/login?notification=confirm_reset_success';
 
 // --------------------------------------------------------------------------
+/**
+ * access_denied_url
+ *
+ * where to redirect when a user reaches a page they do not have access to
+ */
+$config['access_denied_url'] = 'home/access_denied';
+
+// --------------------------------------------------------------------------
 /* End of file authentication_config.php */
 /* Location: ./bookymark/application/third_party/authentication/config/authentication_config.php */

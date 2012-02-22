@@ -61,25 +61,39 @@ class authentication
 	 * if not logged in, redirects to configured url.
 	 * 
 	 * @access public
+	 * @param bool $condition a condition obtained in a user query, usually
+	 * joined in from the roles table. Such as "can_edit_bookmarks".
 	 * @return void
 	 */
-	public function restrict_access()
+	public function restrict_access($condition = '')
 	{
 		// load resources
 		$this->_ci->load->model('authentication_model', 'auth_model');
 		$this->_ci->load->library('session');
 		$this->_ci->load->helper('url');
-		
-		// check for password match, else redirect
-		$chk = $this->_ci->auth_model->password_check(
-			$this->_ci->session->userdata(config_item('username_field')), 
-			$this->_ci->session->userdata(config_item('password_field')),
-			true
-		);
-		
-		if (!$chk)
+			
+		// if condition, only checking for condition set in session
+		if ($condition != '')
 		{
-			redirect(config_item('logged_out_url'));
+			if(!$this->_ci->session->userdata($condition))
+			{
+				redirect(config_item('access_denied_url'));
+			}
+		}
+		// else it's just checking for login
+		else
+		{
+			// check for password match, else redirect
+			$chk = $this->_ci->auth_model->password_check(
+				$this->_ci->session->userdata(config_item('username_field')), 
+				$this->_ci->session->userdata(config_item('password_field')),
+				true
+			);
+			
+			if (!$chk)
+			{
+				redirect(config_item('logged_out_url'));
+			}
 		}
 	}
 	
