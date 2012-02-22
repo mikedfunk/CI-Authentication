@@ -205,7 +205,7 @@ $config['logout_success_url'] = 'home/login';
  *
  * where to redirect on register success
  */
-$config['register_success_url'] = 'notify';
+$config['register_success_url'] = 'alert';
 
 // --------------------------------------------------------------------------
 /**
@@ -246,7 +246,7 @@ $config['confirm_reset_url'] = 'home/confirm_reset_password';
  *
  * where to redirect on request reset password
  */
-$config['request_reset_success_url'] = 'notify';
+$config['request_reset_success_url'] = 'alert';
 
 // --------------------------------------------------------------------------
 /**
@@ -262,7 +262,7 @@ $config['confirm_reset_success_url'] = 'home/login';
  *
  * where to redirect when a user reaches a page they do not have access to
  */
-$config['access_denied_url'] = 'notify';
+$config['access_denied_url'] = 'alert';
 
 // --------------------------------------------------------------------------
 /**
