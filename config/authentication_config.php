@@ -254,7 +254,7 @@ $config['request_reset_success_url'] = 'alert';
  *
  * where to redirect on confirm reset password
  */
-$config['confirm_reset_success_url'] = 'home/login';
+$config['confirm_reset_success_url'] = 'home/login_new_password';
 
 // --------------------------------------------------------------------------
 /**
