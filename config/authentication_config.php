@@ -270,7 +270,7 @@ $config['access_denied_url'] = 'alert';
  *
  * the notification to save to flashdata when logged out
  */
-$config['logged_out_message'] = 'Please log in to continue.';
+$config['logged_out_message'] = 'You have been logged out. Please login to continue.';
 
 // --------------------------------------------------------------------------
 /**
