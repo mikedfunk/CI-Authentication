@@ -8,11 +8,12 @@ Setup
 ----------------------------
 
 1. Clone this into **application/third_party**
-2. Add this to the ```$autoload['packages']``` array in **application/config/autoload.php**:  ```APPPATH.'third_party/error_arrays'```
-3. Import **setup.sql** in PHPMyAdmin or something
-4. Add a user row
-5. Add a role row
-6. Edit **config/authentication_config.php** with the proper stuff like redirect urls, etc.
+2. Update submodules: ```git submodule update --init```
+3. Add this to the ```$autoload['packages']``` array in **application/config/autoload.php**:  ```APPPATH.'third_party/authentication', APPPATH.'third_party/authentication/third_party/alerts', ```
+4. Import **setup.sql** in PHPMyAdmin or something
+5. Add a user row
+6. Add a role row
+7. Edit **config/authentication_config.php** with the proper stuff like redirect urls, etc.
 
 Restrict
 ----------------------------
@@ -80,7 +81,8 @@ It will:
 4. set a new confirm string
 5. add the user
 6. email the user with a confirm registration link (email view, template, from, subject, etc. are all configurable in authentication_config.php)
-7. redirect to the configured registration success url
+7. In case you need it, sets the title for the error page based on config value
+8. redirect to the configured registration success url
 
 Do Confirm Register
 ----------------------------
@@ -115,7 +117,7 @@ You need to set a controller method for when a user requests to reset their pass
     $this->load->library('authentication');
     $this->authentication->do_request_reset_password($email_address);
 
-You will need to pass the ```$email_address``` variable. You could get this from a reset form or a link. This method will email a password link with an encrypted string based on the email address. The user must click this link to confirm they want to reset their password. This prevents passwords being reset without the user's consent.
+You will need to pass the ```$email_address``` variable. You could get this from a reset form or a link. This method will email a password link with an encrypted string based on the email address. The user must click this link to confirm they want to reset their password. This prevents passwords being reset without the user's consent. In case you need it the title for the alert page is set in flashdata based on the config value. Then the user is redirected to the request_reset_password_url.
 
 Do Confirm Reset Password
 ----------------------------
