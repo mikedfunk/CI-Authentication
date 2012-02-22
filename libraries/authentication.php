@@ -82,7 +82,7 @@ class authentication
 		
 		if (!$chk)
 		{
-			$this->alerts->set_error(config_item('logged_out_message'));
+			$this->_ci->alerts->set_error(config_item('logged_out_message'));
 			redirect(config_item('logged_out_url'));
 		}
 		
@@ -91,7 +91,7 @@ class authentication
 		{
 			if(!$this->_ci->session->userdata($condition))
 			{
-				$this->alerts->set_error(config_item('access_denied_message'));
+				$this->_ci->alerts->set_error(config_item('access_denied_message'));
 				redirect(config_item('access_denied_url'));
 			}
 		}
@@ -186,7 +186,7 @@ class authentication
 		// log errors
 		if (!$check) {log_message('error', 'Authentication: error editing user during login.');}
 		
-		$this->alerts->set_success(config_item('logged_in_message'));
+		$this->_ci->alerts->set_success(config_item('logged_in_message'));
 		redirect($this->_ci->session->userdata(config_item('home_page_field')));
 	}
 
@@ -208,7 +208,7 @@ class authentication
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
-		$this->alerts->set_success(config_item('logged_out_message'));
+		$this->_ci->alerts->set_success(config_item('logged_out_message'));
 		redirect(config_item('logout_success_url'));
 	}
 	
@@ -308,7 +308,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect to register_success view
-		$this->alerts->set_success(config_item('register_success_message'));
+		$this->_ci->alerts->set_success(config_item('register_success_message'));
 		redirect(config_item('register_success_url'));
 	}
 	
@@ -344,7 +344,7 @@ class authentication
 			$this->_ci->auth_model->edit_user($user);
 			
 			// redirect to confirm success page
-			$this->alerts->set_success(config_item('confirm_register_success_message'));
+			$this->_ci->alerts->set_success(config_item('confirm_register_success_message'));
 			redirect(config_item('confirm_register_success_url'));
 		}
 		// on no match
@@ -353,7 +353,7 @@ class authentication
 			log_message('error', 'Authentication: confirm register fail.');
 			
 			// redirect to confirm fail page
-			$this->alerts->set_error(config_item('confirm_register_fail_message'));
+			$this->_ci->alerts->set_error(config_item('confirm_register_fail_message'));
 			redirect(config_item('confirm_register_fail_url'));
 		}
 	}
@@ -395,7 +395,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect
-		$this->alerts->set_success(config_item('request_reset_success_message'));
+		$this->_ci->alerts->set_success(config_item('request_reset_success_message'));
 		redirect(config_item('request_reset_success_url'));
 	}
 	
@@ -458,7 +458,7 @@ class authentication
 				$this->_ci->email->send();
 				
 				// redirect
-				$this->alerts->set_success(config_item('confirm_reset_success_message'));
+				$this->_ci->alerts->set_success(config_item('confirm_reset_success_message'));
 				redirect(config_item('confirm_reset_success_url'));
 			}
 			else
