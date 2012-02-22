@@ -58,7 +58,8 @@ class authentication
 	/**
 	 * restrict_access function.
 	 *
-	 * if not logged in, redirects to configured url.
+	 * if not logged in, redirects to configured url. also optionally restricts
+	 * by condition set in session.
 	 * 
 	 * @access public
 	 * @param bool $condition a condition obtained in a user query, usually
@@ -80,20 +81,16 @@ class authentication
 				redirect(config_item('access_denied_url'));
 			}
 		}
-		// else it's just checking for login
-		else
+		// check for password match, else redirect
+		$chk = $this->_ci->auth_model->password_check(
+			$this->_ci->session->userdata(config_item('username_field')), 
+			$this->_ci->session->userdata(config_item('password_field')),
+			true
+		);
+		
+		if (!$chk)
 		{
-			// check for password match, else redirect
-			$chk = $this->_ci->auth_model->password_check(
-				$this->_ci->session->userdata(config_item('username_field')), 
-				$this->_ci->session->userdata(config_item('password_field')),
-				true
-			);
-			
-			if (!$chk)
-			{
-				redirect(config_item('logged_out_url'));
-			}
+			redirect(config_item('logged_out_url'));
 		}
 	}
 	
