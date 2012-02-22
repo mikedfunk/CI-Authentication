@@ -222,7 +222,7 @@ $config['confirm_register_url'] = 'home/confirm_register';
  *
  * where to redirect on confirm success
  */
-$config['confirm_register_success_url'] = 'home/login_new_password';
+$config['confirm_register_success_url'] = 'home/login';
 
 // --------------------------------------------------------------------------
 /**
@@ -311,7 +311,8 @@ $config['register_success_message'] = 'A confirmation has been sent to your emai
  *
  * saves to flashdata alert_page_title
  */
-$config['register_success_title'] = 'Almost Done!';
+$config['register_success_title'] = 
+$config['request_reset_success_title'] = 'Almost Done!';
 
 // --------------------------------------------------------------------------
 /**
@@ -339,6 +340,14 @@ $config['confirm_register_fail_message'] = 'Registration confirmation failed. Pl
  * new password
  */
 $config['request_reset_success_message'] = 'A confirmation has been sent to your email address. Please click the link there to reset your password.';
+
+// --------------------------------------------------------------------------
+/**
+ * request_reset_success_title
+ *
+ * saves to flashdata alert_page_title
+ */
+$config['request_reset_success_title'] = 'Almost Done!';
 
 // --------------------------------------------------------------------------
 /**

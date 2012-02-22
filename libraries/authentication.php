@@ -396,7 +396,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect
-		$this->_ci->alerts->set_success(config_item('request_reset_success_message'));
+		$this->_ci->alerts->set_success(config_item('request_reset_success_message'), config_item('request_reset_success_title'));
 		redirect(config_item('request_reset_success_url'));
 	}
 	
