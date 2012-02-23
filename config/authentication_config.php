@@ -114,7 +114,7 @@ $config['salt_length'] = 64;
 $config['register_email_from'] =
 $config['request_reset_email_from'] =
 $config['confirm_reset_email_from'] =
- 'noreply@test.com';
+ 'admin@bookymark.com';
 
 // --------------------------------------------------------------------------
 /**
