@@ -213,6 +213,7 @@ class authentication
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
+		unset($this->_ci->session->userdata);
 		$this->_ci->alerts->set_success(config_item('logged_out_message'));
 		redirect(config_item('logout_success_url'));
 	}
