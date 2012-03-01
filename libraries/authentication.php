@@ -49,8 +49,6 @@ class authentication
 	{
 		$this->_ci =& get_instance();
 		log_message('debug', 'Authentication: library initialized.');
-		$this->_ci->config->load('authentication_config');
-		log_message('debug', 'Authentication: config loaded.');
 	}
 	
 	// --------------------------------------------------------------------------
