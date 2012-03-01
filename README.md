@@ -10,8 +10,8 @@ Setup
 1. Clone this into **application/third_party/authentication** or add it as a submodule
 2. Update submodules: ```git submodule update --init --recursive```
 3. Add this to the ```$autoload['packages']``` array in **application/config/autoload.php**:  ```APPPATH.'third_party/authentication', APPPATH.'third_party/authentication/third_party/alerts', ```
-4. Copy ***config/authentication_config.php*** file to ***application/config/authentication.php*** **(NOTE: Must be renamed to match library name!)**
-7. Edit ***application/config/authentication.php*** with the proper stuff like redirect urls, etc.
+4. Copy **config/authentication_config.php** file to **application/config/authentication.php** *(NOTE: Must be renamed to match library name!)*
+7. Edit **application/config/authentication.php** with the proper stuff like redirect urls, etc.
 4. Import **setup.sql** in PHPMyAdmin or something
 
 Restrict
