@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_model.php
- * @version		1.1.3
+ * @version		1.1.4
  * @date		02/17/2012
  * 
  * Copyright (c) 2012
@@ -39,7 +39,7 @@ class ci_authentication_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database();
-		$this->config->load('authentication');
+		$this->config->load('ci_authentication');
 		log_message('debug', 'CI Authentication: model loaded.');
 	}
 	

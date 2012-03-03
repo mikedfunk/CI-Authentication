@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		
- * @version		1.0
+ * @version		1.1.4
  * @date		10/14/2011
  * 
  * Copyright (c) 2011
@@ -32,14 +32,16 @@
  */
 function encrypt_this($password, $salt = '')
 {
+	$CI =& get_instance();
+	
 	if ($salt == '') {
-		$CI =& get_instance();
 		$CI->load->helper('string');
 		$salt = random_string('alnum', 64);
 	}
 	
 	// Prefix the password with the salt
-	$hash = $salt . $password;
+	// $hash = $salt . $password;
+	$hash = $salt . $password . $this->config->item('encryption_key');
 	// Hash the salted password a bunch of times
 	for ( $i = 0; $i < 53; $i ++ ) {
 		$hash = hash('sha256', $hash);
