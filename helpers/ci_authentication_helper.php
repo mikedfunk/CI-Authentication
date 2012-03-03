@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * authentication_helper
+ * ci_authentication_helper
  * 
  * shortcuts for username and password from the session
  * 
@@ -9,8 +9,8 @@
  * @link		http://mikefunk.com
  * @email		mike@mikefunk.com
  * 
- * @file		authentication_helper.php
- * @version		1.0
+ * @file		ci_authentication_helper.php
+ * @version		1.1.0
  * @date		02/17/2012
  * 
  * Copyright (c) 2012
@@ -30,7 +30,7 @@ function auth_username()
 {
 	$_ci =& get_instance();
 	$_ci->load->library('session');
-	$_ci->config->load('authentication_config');
+	$_ci->config->load('authentication');
 	
 	return $_ci->session->userdata(config_item('username_field'));
 }
@@ -49,12 +49,12 @@ function auth_password()
 {
 	$_ci =& get_instance();
 	$_ci->load->library('session');
-	$_ci->config->load('authentication_config');
+	$_ci->config->load('authentication');
 	
 	return $_ci->session->userdata(config_item('password_field'));
 }
 
 // --------------------------------------------------------------------------
 
-/* End of file authentication_helper.php */
-/* Location: ./bookymark/application/third_party/authentication/helpers/authentication_helper.php */
+/* End of file ci_authentication_helper.php */
+/* Location: ./ci_authentication/helpers/ci_authentication_helper.php */

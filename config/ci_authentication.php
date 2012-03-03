@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * authentication_config
+ * ci_authentication config
  * 
- * All configurable values for the authentication package
+ * All configurable values for the ci_authentication spark
  * 
  * @license		http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @author		Mike Funk
  * @link		http://mikefunk.com
  * @email		mike@mikefunk.com
  * 
- * @file		authentication_config.php
- * @version		1.0
+ * @file		ci_authentication.php
+ * @version		1.1.0
  * @date		02/17/2012
  * 
  * Copyright (c) 2012
@@ -359,5 +359,6 @@ $config['request_reset_success_title'] = 'Almost Done!';
 $config['confirm_reset_success_message'] = 'Password reset. Your new password has been emailed to you. Please retrieve it and login.';
 
 // --------------------------------------------------------------------------
-/* End of file authentication_config.php */
-/* Location: ./bookymark/application/third_party/authentication/config/authentication_config.php */
+
+/* End of file ci_authentication.php */
+/* Location: ./ci_authentication/config/ci_authentication.php */
