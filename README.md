@@ -10,7 +10,7 @@ Setup
 1. Install sparks on [GetSparks.org](http://getsparks.org)
 2. Edit **config/authentication.php** with the proper stuff like redirect urls, etc.
 3. Import **setup.sql** in PHPMyAdmin or something
-4. Load the spark: ```$this->load->spark('ci_authentication/1.1.3');```
+4. Load the spark: ```$this->load->spark('ci_authentication/1.1.4');```
 5. Load the library: ```$this->load->library('ci_authentication');```
 
 *NOTE: If cloning this directly, be sure to also clone [CI Alerts](https://github.com/mikedfunk/CI-Alerts) version 1.1.2 as a spark and load it. CI Alerts are required for CI Authentication. The spark format requires this already as a dependency.*
