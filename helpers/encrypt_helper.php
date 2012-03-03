@@ -1,9 +1,8 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * encrypt_helper
  * 
- * Formerly in admin_model and then users_model.
+ * Unique encryption method with salt. Feel free to change this for security.
  * 
  * @license		http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @author		Mike Funk
