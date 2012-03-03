@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.1.1
+ * @version		1.1.2
  * @date		02/17/2012
  * 
  * Copyright (c) 2012
@@ -49,6 +49,9 @@ class ci_authentication
 	{
 		$this->_ci =& get_instance();
 		log_message('debug', 'CI Authentication: library initialized.');
+		
+		$this->_ci->load->spark('ci_alerts/1.1.1');
+		log_message('debug', 'CI Authentication: CI Alerts spark initialized.');
 	}
 	
 	// --------------------------------------------------------------------------
@@ -68,7 +71,6 @@ class ci_authentication
 	{
 		// load resources
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
-		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->library(array('session', 'ci_alerts'));
 		$this->_ci->load->helper('url');
 			
@@ -166,7 +168,6 @@ class ci_authentication
 	{
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->library('ci_alerts');
 		
 		// unset temporary password and confirm password fields
@@ -209,7 +210,6 @@ class ci_authentication
 	 */
 	public function do_logout()
 	{
-		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->library('ci_alerts');
 		$this->_ci->load->helper('url');
 		
@@ -293,7 +293,6 @@ class ci_authentication
 	private function _send_register_email($user_array)
 	{
 		$this->_ci->load->helper('url');
-		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->library(array('email', 'session', 'ci_alerts'));
 		
 		// from, to, url, content
@@ -338,7 +337,6 @@ class ci_authentication
 		// check for user with confirm_string
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$this->_ci->load->helper('url');
-		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->library(array('session', 'ci_alerts'));
 		$q = $this->_ci->auth_model->get_user_by_confirm_string($confirm_string);
 		
@@ -381,7 +379,6 @@ class ci_authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'url'));
-		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->library(array('email', 'session', 'ci_alerts'));
 		
 		// email reset password link
@@ -423,7 +420,6 @@ class ci_authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->library(array('email', 'session', 'ci_alerts'));
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		
