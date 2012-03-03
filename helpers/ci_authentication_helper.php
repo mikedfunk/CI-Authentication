@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_helper.php
- * @version		1.1.3
+ * @version		1.1.4
  * @date		02/17/2012
  * 
  * Copyright (c) 2012
@@ -30,7 +30,7 @@ function auth_username()
 {
 	$_ci =& get_instance();
 	$_ci->load->library('session');
-	$_ci->config->load('authentication');
+	$_ci->config->load('ci_authentication');
 	
 	return $_ci->session->userdata(config_item('username_field'));
 }
@@ -49,7 +49,7 @@ function auth_password()
 {
 	$_ci =& get_instance();
 	$_ci->load->library('session');
-	$_ci->config->load('authentication');
+	$_ci->config->load('ci_authentication');
 	
 	return $_ci->session->userdata(config_item('password_field'));
 }
