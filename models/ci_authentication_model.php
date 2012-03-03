@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * authentication_model
+ * ci_authentication_model
  * 
- * All queries for authentication package.
+ * All queries for ci_authentication package.
  * 
  * @license		http://www.apache.org/licenses/LICENSE-2.0  Apache License 2.0
  * @author		Mike Funk
  * @link		http://mikefunk.com
  * @email		mike@mikefunk.com
  * 
- * @file		authentication_model.php
- * @version		1.0
+ * @file		ci_authentication_model.php
+ * @version		1.1.0
  * @date		02/17/2012
  * 
  * Copyright (c) 2012
@@ -19,11 +19,11 @@
 // --------------------------------------------------------------------------
 
 /**
- * authentication_model class.
+ * ci_authentication_model class.
  * 
  * @extends CI_Model
  */
-class authentication_model extends CI_Model
+class ci_authentication_model extends CI_Model
 {	
 	// --------------------------------------------------------------------------
 	
@@ -39,8 +39,8 @@ class authentication_model extends CI_Model
 	{
 		parent::__construct();
 		$this->load->database();
-		$this->config->load('authentication_config');
-		log_message('debug', 'Authentication: model loaded.');
+		$this->config->load('authentication');
+		log_message('debug', 'CI Authentication: model loaded.');
 	}
 	
 	// --------------------------------------------------------------------------
@@ -230,5 +230,6 @@ class authentication_model extends CI_Model
 	
 	// --------------------------------------------------------------------------
 }
-/* End of file authentication_model.php */
-/* Location: ./bookymark/application/third_party/authentication/models/authentication_model.php */
+
+/* End of file ci_authentication_model.php */
+/* Location: ./ci_authentication/models/ci_authentication_model.php */

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * authentication
+ * ci_authentication
  * 
  * Tools for authentication in CodeIgniter.
  * 
@@ -9,8 +9,8 @@
  * @link		http://mikefunk.com
  * @email		mike@mikefunk.com
  * 
- * @file		authentication.php
- * @version		1.0
+ * @file		ci_authentication.php
+ * @version		1.1.0
  * @date		02/17/2012
  * 
  * Copyright (c) 2012
@@ -19,9 +19,9 @@
 // --------------------------------------------------------------------------
 
 /**
- * authentication class.
+ * ci_authentication class.
  */
-class authentication
+class ci_authentication
 {
 	// --------------------------------------------------------------------------
 	
@@ -48,7 +48,7 @@ class authentication
 	public function __construct()
 	{
 		$this->_ci =& get_instance();
-		log_message('debug', 'Authentication: library initialized.');
+		log_message('debug', 'CI Authentication: library initialized.');
 	}
 	
 	// --------------------------------------------------------------------------
@@ -67,8 +67,9 @@ class authentication
 	public function restrict_access($condition = '')
 	{
 		// load resources
-		$this->_ci->load->model('authentication_model', 'auth_model');
-		$this->_ci->load->library(array('alerts', 'session'));
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
+		$this->_ci->load->library('session');
+		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->helper('url');
 			
 		// check for password match, else redirect
@@ -80,7 +81,7 @@ class authentication
 		
 		if (!$chk)
 		{
-			$this->_ci->alerts->set('error', config_item('logged_out_message'));
+			$this->_ci->ci_alerts->set('error', config_item('logged_out_message'));
 			redirect(config_item('logged_out_url'));
 		}
 		
@@ -89,7 +90,7 @@ class authentication
 		{
 			if(!$this->_ci->session->userdata($condition))
 			{
-				$this->_ci->alerts->set('error', config_item('access_denied_message'));
+				$this->_ci->ci_alerts->set('error', config_item('access_denied_message'));
 				$this->_ci->session->set_flashdata('alert_page_title', 'Access Denied');
 				redirect(config_item('access_denied_url'));
 			}
@@ -163,9 +164,10 @@ class authentication
 	 */
 	public function do_login()
 	{
-		$this->_ci->load->model('authentication_model', 'auth_model');
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->library(array('session', 'alerts'));
+		$this->_ci->load->library('alerts');
+		$this->_ci->load->spark('ci_alerts/1.1.0');
 		
 		// unset temporary password and confirm password fields
 		unset($_POST['confirm_password']);
@@ -189,7 +191,7 @@ class authentication
 		// log errors
 		if (!$check) {log_message('error', 'Authentication: error editing user during login.');}
 		
-		$this->_ci->alerts->set('success', config_item('logged_in_message'));
+		$this->_ci->ci_alerts->set('success', config_item('logged_in_message'));
 		redirect($this->_ci->session->userdata(config_item('home_page_field')));
 	}
 
@@ -207,12 +209,13 @@ class authentication
 	 */
 	public function do_logout()
 	{
-		$this->_ci->load->library(array('session', 'alerts'));
+		$this->_ci->load->library('alerts');
+		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
 		unset($this->_ci->session->userdata);
-		$this->_ci->alerts->set('success', config_item('logged_out_message'));
+		$this->_ci->ci_alerts->set('success', config_item('logged_out_message'));
 		redirect(config_item('logout_success_url'));
 	}
 	
@@ -229,7 +232,7 @@ class authentication
 	public function do_register()
 	{
 		// load resources
-		$this->_ci->load->model('authentication_model', 'auth_model');
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$this->_ci->load->helper(array('encrypt_helper', 'string'));
 		
 		// get user, unset confirm password, set salt
@@ -261,7 +264,7 @@ class authentication
 	public function resend_register_email($confirm_string)
 	{
 		// load resources
-		$this->_ci->load->model('authentication_model', 'auth_model');
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		
 		// get user and send email
 		$q = $this->_ci->auth_model->get_user_by_confirm_string($confirm_string);
@@ -290,7 +293,8 @@ class authentication
 	private function _send_register_email($user_array)
 	{
 		$this->_ci->load->helper('url');
-		$this->_ci->load->library(array('email', 'session', 'alerts'));
+		$this->_ci->load->library(array('email', 'session'));
+		$this->_ci->load->spark('ci_alerts/1.1.0');
 		
 		// from, to, url, content
 		$this->_ci->email->from(config_item('register_email_from'), config_item('register_email_from_name'));
@@ -312,7 +316,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect to register_success view
-		$this->_ci->alerts->set('success', config_item('register_success_message'));
+		$this->_ci->ci_alerts->set('success', config_item('register_success_message'));
 		$this->_ci->session->set_flashdata('alert_page_title', config_item('register_success_title'));
 		redirect(config_item('register_success_url'));
 	}
@@ -332,9 +336,10 @@ class authentication
 	public function do_confirm_register($confirm_string)
 	{
 		// check for user with confirm_string
-		$this->_ci->load->model('authentication_model', 'auth_model');
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$this->_ci->load->helper('url');
-		$this->_ci->load->library(array('session', 'alerts'));
+		$this->_ci->load->library('session');
+		$this->_ci->load->spark('ci_alerts/1.1.0');
 		$q = $this->_ci->auth_model->get_user_by_confirm_string($confirm_string);
 		
 		// on match
@@ -349,7 +354,7 @@ class authentication
 			$this->_ci->auth_model->edit_user($user);
 			
 			// redirect to confirm success page
-			$this->_ci->alerts->set('success', config_item('confirm_register_success_message'));
+			$this->_ci->ci_alerts->set('success', config_item('confirm_register_success_message'));
 			redirect(config_item('confirm_register_success_url'));
 		}
 		// on no match
@@ -358,7 +363,7 @@ class authentication
 			log_message('error', 'Authentication: confirm register fail.');
 			
 			// redirect to confirm fail page
-			$this->_ci->alerts->set('error', config_item('confirm_register_fail_message'));
+			$this->_ci->ci_alerts->set('error', config_item('confirm_register_fail_message'));
 			redirect(config_item('confirm_register_fail_url'));
 		}
 	}
@@ -376,7 +381,8 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'url'));
-		$this->_ci->load->library(array('email', 'session', 'alerts'));
+		$this->_ci->load->library(array('email', 'session'));
+		$this->_ci->load->spark('ci_alerts/1.1.0');
 		
 		// email reset password link
 
@@ -400,7 +406,7 @@ class authentication
 		$this->_ci->email->send();
 		
 		// redirect
-		$this->_ci->alerts->set('success', config_item('request_reset_success_message'));
+		$this->_ci->ci_alerts->set('success', config_item('request_reset_success_message'));
 		$this->_ci->session->set_flashdata('alert_page_title', config_item('request_reset_success_title'));
 		redirect(config_item('request_reset_success_url'));
 	}
@@ -417,8 +423,9 @@ class authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->library(array('email', 'session', 'alerts'));
-		$this->_ci->load->model('authentication_model', 'auth_model');
+		$this->_ci->load->library(array('email', 'session'));
+		$this->_ci->load->spark('ci_alerts/1.1.0');
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		
 		// get username and encrypted_username
 		$username = $this->_ci->input->get(config_item('username_field'));
@@ -464,7 +471,7 @@ class authentication
 				$this->_ci->email->send();
 				
 				// redirect
-				$this->_ci->alerts->set('success', config_item('confirm_reset_success_message'));
+				$this->_ci->ci_alerts->set('success', config_item('confirm_reset_success_message'));
 				redirect(config_item('confirm_reset_success_url'));
 			}
 			else
@@ -480,5 +487,6 @@ class authentication
 	
 	// --------------------------------------------------------------------------
 }
-/* End of file authentication.php */
-/* Location: ./bookymark/application/third_party/authentication/libraries/authentication.php */
+
+/* End of file ci_authentication.php */
+/* Location: ./ci_authentication/libraries/ci_authentication.php */
