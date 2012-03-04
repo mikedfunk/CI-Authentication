@@ -1,4 +1,3 @@
-
 CI Authentication
 ============================
 
@@ -8,7 +7,8 @@ Setup
 ----------------------------
 
 1. Install sparks on [GetSparks.org](http://getsparks.org)
-2. Edit **config/authentication.php** with the proper stuff like redirect urls, etc.
+2. [Install this spark](http://getsparks.org/packages/ci_authentication/versions/HEAD/show)
+2. Edit **config/ci_authentication.php** with the proper stuff like redirect urls, etc.
 3. Import **setup.sql** in PHPMyAdmin or something
 4. Load the spark: ```$this->load->spark('ci_authentication/1.1.5');```
 5. Load the library: ```$this->load->library('ci_authentication');```
