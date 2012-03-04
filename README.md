@@ -77,7 +77,7 @@ It will:
 3. set the role id
 4. set a new confirm string
 5. add the user
-6. email the user with a confirm registration link (email view, template, from, subject, etc. are all configurable in **config/authentication.php**)
+6. email the user with a confirm registration link (email view, template, from, subject, etc. are all configurable in **config/ci_authentication.php**)
 7. In case you need it, sets the title for the error page based on config value
 8. redirect to the configured registration success url
 
