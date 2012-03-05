@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.1.7
+ * @version		1.1.8
  * @date		03/05/2012
  */
 
