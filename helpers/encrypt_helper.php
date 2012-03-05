@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		
- * @version		1.1.6
+ * @version		1.1.7
  * @date		10/14/2011
  * 
  * Copyright (c) 2011

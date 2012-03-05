@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		autoload.php
- * @version		1.0
+ * @version		1.1.7
  * @date		03/04/2012
  * 
  * Copyright (c) 2012
@@ -18,10 +18,10 @@
 
 // --------------------------------------------------------------------------
 
-// $autoload['library'] = array('ci_authentication');
-// $autoload['model'] = array('ci_authentication_model');
-// $autoload['helper'] = array('ci_authentication_helper');
-// $autoload['config'] = array('ci_authentication');
+$autoload['library'] = array('ci_authentication');
+$autoload['model'] = array('ci_authentication_model');
+$autoload['helper'] = array('ci_authentication_helper');
+$autoload['config'] = array('ci_authentication');
 
 // --------------------------------------------------------------------------
 
