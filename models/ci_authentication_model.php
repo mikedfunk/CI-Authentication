@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_model.php
- * @version		1.1.8
+ * @version		1.1.9
  * @date		03/05/2012
  */
 
@@ -160,7 +160,7 @@ class ci_authentication_model extends CI_Model
 		$rt = config_item('roles_table');
 		
 		// join in roles
-		if ($join)
+		if ($join && $rt != '')
 		{
 			$this->db->select(
 				$rt . '.*,' .

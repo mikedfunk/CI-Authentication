@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.1.8
+ * @version		1.1.9
  * @date		03/05/2012
  */
 
@@ -26,9 +26,10 @@ $config['users_table'] = 'users';
 /**
  * roles_table
  *
- * the table to pull roles from
+ * the table to pull roles from. If you don't have a separate roles table, 
+ * leave this blank and it won't be joined in.
  */
-$config['roles_table'] = 'roles';
+$config['roles_table'] = '';
 
 // --------------------------------------------------------------------------
 /**
@@ -56,11 +57,22 @@ $config['remember_me_field'] = 'remember_me';
 
 // --------------------------------------------------------------------------
 /**
- * home_page_field
+ * login_success_url
  *
- * the field in the db and session used for home_page (in the roles table)
+ * if you don't have a login_success field in the db, use this to redirect
+ * successful logins to this page.
  */
-$config['home_page_field'] = 'home_page';
+$config['login_success_url'] = 'dashboard';
+
+// --------------------------------------------------------------------------
+/**
+ * login_success_url_field
+ *
+ * the field in the db and session used for redirecting to after successful
+ * login (in the roles or users table) leave blank if you don't have this in
+ *  the db.
+ */
+$config['login_success_url_field'] = '';
 
 // --------------------------------------------------------------------------
 /**
@@ -112,7 +124,7 @@ $config['salt_length'] = 64;
 $config['register_email_from'] =
 $config['request_reset_email_from'] =
 $config['confirm_reset_email_from'] =
- 'admin@bookymark.com';
+ 'admin@test.com';
 
 // --------------------------------------------------------------------------
 /**
@@ -123,7 +135,7 @@ $config['confirm_reset_email_from'] =
 $config['register_email_from_name'] = 
 $config['request_reset_email_from_name'] =
 $config['confirm_reset_email_from_name'] =
-'Bookymark';
+'Admin';
 
 // --------------------------------------------------------------------------
 /**
@@ -139,7 +151,7 @@ $config['register_email_subject'] = 'Registration';
  *
  * the reply-to email address for request reset password email
  */
-$config['request_reset_email_subject'] = 'Bookymark.com: Request for password reset';
+$config['request_reset_email_subject'] = 'Request for password reset';
 
 // --------------------------------------------------------------------------
 /**
@@ -147,7 +159,7 @@ $config['request_reset_email_subject'] = 'Bookymark.com: Request for password re
  *
  * the reply-to email address for confirm reset password email
  */
-$config['confirm_reset_email_subject'] = 'Bookymark.com: New password';
+$config['confirm_reset_email_subject'] = 'New password';
 
 // --------------------------------------------------------------------------
 /**
@@ -264,14 +276,6 @@ $config['access_denied_url'] = 'alert';
 
 // --------------------------------------------------------------------------
 /**
- * logged_out_message
- *
- * the notification to save to flashdata when logged out
- */
-$config['logged_out_message'] = 'You have been logged out. Please login to continue.';
-
-// --------------------------------------------------------------------------
-/**
  * access_denied_message
  *
  * the notification to save to flashdata when access is denied
@@ -290,9 +294,9 @@ $config['logged_in_message'] = 'You have been logged in.';
 /**
  * logged_out_message
  *
- * the notification to save to flashdata when user logs out
+ * the notification to save to flashdata when logged out
  */
-$config['logged_out_message'] = 'You have been logged out.';
+$config['logged_out_message'] = 'Please login to continue.';
 
 // --------------------------------------------------------------------------
 /**

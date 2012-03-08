@@ -10,9 +10,9 @@ Setup
 2. [Install this spark](http://getsparks.org/packages/ci_authentication/versions/HEAD/show)
 2. Edit **config/ci_authentication.php** with the proper stuff like redirect urls, etc.
 3. Import **setup.sql** in PHPMyAdmin or something
-4. Load the spark: ```$this->load->spark('ci_authentication/1.1.8');```
+4. Load the spark: ```$this->load->spark('ci_authentication/x.x.x');```
 
-*NOTE: If cloning this directly, be sure to also clone [CI Alerts](https://github.com/mikedfunk/CI-Alerts) version 1.1.4 as a spark and load it. CI Alerts are required for CI Authentication. The spark format requires this already as a dependency.*
+*NOTE: Be sure to also clone [CI Alerts](https://github.com/mikedfunk/CI-Alerts) version 1.1.4 as a spark and load it. CI Alerts are required for CI Authentication. The spark format requires this as a dependency, but double-check that you have it.*
 
 Restrict
 ----------------------------
@@ -37,7 +37,7 @@ When form validation passes, just do this:
 
     $this->ci_authentication->do_login();
     
-It will hash and salt the password, log in the user (add username, user id, and encrypted password to the session), and redirect to the configured home page in the roles table.
+It will hash and salt the password, log in the user (add username, user id, and encrypted password to the session), and redirect to the configured ```login_success_url```. Or the user's ```login_success_url_field``` in the users or roles table.
 
 Remember Me
 ----------------------------
@@ -59,26 +59,26 @@ It will destroy the session and redirect to the configured logged out url.
 
 ----------------------------
 
-Registration
+Register
 ============================
 
 Do Register
 ----------------------------
 
-When form validation passes for registration, do this:
+When registration passed form validation, do this:
 
     $this->ci_authentication->do_register();
     
 It will:
 
-1. unset confirm_password
+1. unset ```$_POST['confirm_password']```
 2. set a new salt and encrypt the password
 3. set the role id
 4. set a new confirm string
 5. add the user
-6. email the user with a confirm registration link (email view, template, from, subject, etc. are all configurable in **config/ci_authentication.php**)
+6. email the user with a confirm register link (email view, template, from, subject, etc. are all configurable in **config/ci_authentication.php**)
 7. In case you need it, sets the title for the error page based on config value
-8. redirect to the configured registration success url
+8. redirect to the configured register success url
 
 Do Confirm Register
 ----------------------------
@@ -87,16 +87,16 @@ You need to set a controller method for when a user clicks the confirmation link
 
     $this->ci_authentication->do_confirm_register();
 
-It will check if a confirmation string exists for the passed string. If so, it will remove that string and redirect to the confirm_register_success_url. Otherwise it will redirect to the confirm_register_fail_url.
+It will check if a confirmation string exists for the passed string. If so, it will remove that string and redirect to the ```confirm_register_success_url```. Otherwise it will redirect to the ```confirm_register_fail_url```.
 
 Do Resend Register
 ----------------------------
 
-If you want to allow resending of the registration email, you need to add a controller method and link to it somewhere. That method needs to accept the confirm_string as a parameter or POST variable or something. In that method, just do this:
+If you want to allow resending of the registration email, you need to add a controller method and link to it somewhere. That method needs to accept the ```confirm_string``` as a parameter or POST variable or something. In that method, just do this:
 
     $this->ci_authentication->do_resend_register($confirm_string);
 
-It will check if a confirmation string exists for the passed string. If so, it will resend the confirmation email and redirect to register_success_url.
+It will check if a confirmation string exists for the passed string. If so, it will resend the confirmation email and redirect to ```register_success_url```.
 
 ----------------------------
 
@@ -110,7 +110,7 @@ You need to set a controller method for when a user requests to reset their pass
 
     $this->ci_authentication->do_request_reset_password($email_address);
 
-You will need to pass the ```$email_address``` variable. You could get this from a reset form or a link. This method will email a password link with an encrypted string based on the email address. The user must click this link to confirm they want to reset their password. This prevents passwords being reset without the user's consent. In case you need it the title for the alert page is set in flashdata based on the config value. Then the user is redirected to the request_reset_password_url.
+You will need to pass the ```$email_address``` variable. You could get this from a reset form or a link. This method will email a password link with an encrypted string based on the email address. The user must click this link to confirm they want to reset their password. This prevents passwords being reset without the user's consent. In case you need it the title for the alert page is set in flashdata based on the config value. Then the user is redirected to the ```request_reset_password_url```.
 
 Do Confirm Reset Password
 ----------------------------
@@ -120,3 +120,16 @@ You need to set a controller method for when a user clicks the reset password co
     $this->ci_authentication->do_request_reset_password();
 
 This method will retrieve the username and encrypted string via $_GET variables. It will make sure the encrypted username matches the encrypted string, make sure a user exists with that username, set a new random password, email it to the user, update the user in the database with the new password (salted and encrypted), and redirect to the configured page.
+
+----------------------------
+
+Change Log
+============================
+
+**1.1.9** 
+
+* Made the roles table optional (leave blank in config if you don't join in a roles table to users)
+* Changed ```home_page_field``` to the more appropriate ```login_success_url_field``` in **config/ci_authentication.php**.
+* Added config item for a default ```login_success_url```. Use this if you don't set the ```login_success_url_field``` in the users or roles table.
+* Removed duplicate config item: ```logged_out_message```
+* Added an example folder with an authentication controller, views, and a restricted page.
