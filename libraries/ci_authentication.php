@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.1.8
+ * @version		1.1.9
  * @date		03/05/2012
  */
 
@@ -69,7 +69,7 @@ class ci_authentication
 	{
 		// load resources
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
-		$this->_ci->load->library(array('session', 'ci_alerts'));
+		$this->_ci->load->library('session');
 		$this->_ci->load->helper('url');
 			
 		// check for password match, else redirect
@@ -166,7 +166,6 @@ class ci_authentication
 	{
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->library('ci_alerts');
 		
 		// unset temporary password and confirm password fields
 		unset($_POST['confirm_password']);
@@ -190,8 +189,16 @@ class ci_authentication
 		// log errors
 		if (!$check) {log_message('error', 'Authentication: error editing user during login.');}
 		
+		// redirect to login_success_url, either as a db field or a configured url
 		$this->_ci->ci_alerts->set('success', config_item('logged_in_message'));
-		redirect($this->_ci->session->userdata(config_item('home_page_field')));
+		if (config_item('login_success_url_field') != '')
+		{
+			redirect($this->_ci->session->userdata(config_item('login_success_url_field')));
+		}
+		else
+		{
+			redirect(config_item('login_success_url'));
+		}
 	}
 
 	// --------------------------------------------------------------------------
@@ -208,7 +215,6 @@ class ci_authentication
 	 */
 	public function do_logout()
 	{
-		$this->_ci->load->library('ci_alerts');
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
@@ -291,7 +297,7 @@ class ci_authentication
 	private function _send_register_email($user_array)
 	{
 		$this->_ci->load->helper('url');
-		$this->_ci->load->library(array('email', 'session', 'ci_alerts'));
+		$this->_ci->load->library(array('email', 'session'));
 		
 		// from, to, url, content
 		$this->_ci->email->from(config_item('register_email_from'), config_item('register_email_from_name'));
@@ -335,7 +341,7 @@ class ci_authentication
 		// check for user with confirm_string
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$this->_ci->load->helper('url');
-		$this->_ci->load->library(array('session', 'ci_alerts'));
+		$this->_ci->load->library('session');
 		$q = $this->_ci->auth_model->get_user_by_confirm_string($confirm_string);
 		
 		// on match
@@ -377,7 +383,7 @@ class ci_authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'url'));
-		$this->_ci->load->library(array('email', 'session', 'ci_alerts'));
+		$this->_ci->load->library(array('email', 'session'));
 		
 		// email reset password link
 
@@ -418,7 +424,7 @@ class ci_authentication
 	{
 		// load resources
 		$this->_ci->load->helper(array('encrypt_helper', 'string', 'url'));
-		$this->_ci->load->library(array('email', 'session', 'ci_alerts'));
+		$this->_ci->load->library(array('email', 'session'));
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		
 		// get username and encrypted_username
