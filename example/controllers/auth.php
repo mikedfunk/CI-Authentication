@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		auth.php
- * @version		1.1.9
+ * @version		1.1.10
  * @date		03/08/2012
  * 
  * Copyright (c) 2012
@@ -28,6 +28,19 @@ class auth extends CI_Controller
 	// --------------------------------------------------------------------------
 	
 	/**
+	 * __construct function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
 	 * login function.
 	 *
 	 * shows login form, handles validation.
@@ -38,9 +51,8 @@ class auth extends CI_Controller
 	public function login()
 	{
 		// load resources
-		$this->load->spark('ci_authentication/1.1.9');
 		$this->load->helper(array('cookie', 'url'));
-		$this->load->library(array('form_validation', 'carabiner'));
+		$this->load->library('form_validation');
 		$this->ci_authentication->remember_me();
 		
 		// form validation
@@ -71,9 +83,8 @@ class auth extends CI_Controller
 	public function login_new_password()
 	{
 		// load resources
-		$this->load->spark('ci_authentication/1.1.9');
 		$this->load->helper(array('cookie', 'url'));
-		$this->load->library(array('form_validation', 'carabiner'));
+		$this->load->library('form_validation');
 		$this->ci_authentication->remember_me();
 		
 		// form validation
@@ -168,9 +179,8 @@ class auth extends CI_Controller
 	 */
 	public function register()
 	{
-		$this->load->spark('ci_authentication/1.1.9');
 		$this->load->helper(array('cookie', 'url'));
-		$this->load->library(array('form_validation', 'carabiner'));
+		$this->load->library('form_validation');
 		
 		// form validation
 		$this->form_validation->set_rules('email_address', 'Email Address', 'trim|required|valid_email|is_unique[users.email_address]');
@@ -280,9 +290,7 @@ class auth extends CI_Controller
 	public function alert()
 	{
 		// load resources
-		$this->load->spark('ci_alerts/1.1.4');
 		$this->load->helper('url');
-		$this->load->library('carabiner');
 		
 		// load content and view
 		$data['content'] = $this->load->view('auth/alert_view', $data);

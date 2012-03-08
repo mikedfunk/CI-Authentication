@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.1.9
+ * @version		1.1.10
  * @date		03/05/2012
  */
 
@@ -81,7 +81,7 @@ class ci_authentication
 		
 		if (!$chk)
 		{
-			$this->_ci->ci_alerts->set('error', config_item('logged_out_message'));
+			$this->_ci->ci_alerts->set('error', config_item('login_required_message'));
 			redirect(config_item('logged_out_url'));
 		}
 		
@@ -218,7 +218,6 @@ class ci_authentication
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
-		unset($this->_ci->session->userdata);
 		$this->_ci->ci_alerts->set('success', config_item('logged_out_message'));
 		redirect(config_item('logout_success_url'));
 	}

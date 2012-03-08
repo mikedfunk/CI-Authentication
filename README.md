@@ -126,6 +126,12 @@ This method will retrieve the username and encrypted string via $_GET variables.
 Change Log
 ============================
 
+**1.1.10**
+
+* Added config item for ```login_required_message```. This is set when a user is not logged in but hits a page that requires login.
+* Fixed some bugs in the example **example/controllers/auth.php** controller
+* Removed code to unset $this->session->userdata on logout
+
 **1.1.9** 
 
 * Made the roles table optional (leave blank in config if you don't join in a roles table to users)

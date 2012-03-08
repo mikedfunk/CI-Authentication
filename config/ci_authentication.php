@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.1.9
+ * @version		1.1.10
  * @date		03/05/2012
  */
 
@@ -296,7 +296,16 @@ $config['logged_in_message'] = 'You have been logged in.';
  *
  * the notification to save to flashdata when logged out
  */
-$config['logged_out_message'] = 'Please login to continue.';
+$config['logged_out_message'] = 'You have been logged out.';
+
+// --------------------------------------------------------------------------
+/**
+ * login_required_message
+ *
+ * the notification to save to flashdata when a user is not logged in but
+ * tries to access a page that requires login.
+ */
+$config['login_required_message'] = 'Please login to continue.';
 
 // --------------------------------------------------------------------------
 /**
