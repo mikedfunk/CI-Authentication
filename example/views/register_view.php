@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		register_view.php
- * @version		1.1.9
+ * @version		1.1.10
  * @date		02/18/2012
  * 
  * Copyright (c) 2012
