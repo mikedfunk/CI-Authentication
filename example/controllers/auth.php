@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		auth.php
- * @version		1.1.10
- * @date		03/08/2012
+ * @version		1.2.0
+ * @date		03/09/2012
  * 
  * Copyright (c) 2012
  */
