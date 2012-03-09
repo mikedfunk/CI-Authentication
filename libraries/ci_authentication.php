@@ -66,8 +66,8 @@ class ci_authentication
 	{
 		$this->_ci->load->library('session');
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
-		$username = $this->_ci->session->userdata('username');
-		$password = $this->_ci->session->userdata('password');
+		$username = $this->_ci->session->userdata(config_item('username_field'));
+		$password = $this->_ci->session->userdata(config_item('password_field'));
 		return $this->_ci->auth_model->password_check($username, $password, TRUE);
 	}
 	
@@ -91,14 +91,7 @@ class ci_authentication
 		$this->_ci->load->library('session');
 		$this->_ci->load->helper('url');
 			
-		// check for password match, else redirect
-		$chk = $this->_ci->auth_model->password_check(
-			$this->_ci->session->userdata(config_item('username_field')), 
-			$this->_ci->session->userdata(config_item('password_field')),
-			true
-		);
-		
-		if (!$chk)
+		if (!$this->is_logged_in())
 		{
 			$this->_ci->ci_alerts->set('error', config_item('login_required_message'));
 			redirect(config_item('logged_out_url'));
