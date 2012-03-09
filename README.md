@@ -165,6 +165,7 @@ Change Log
 * Fixed bug in ```is_logged_in()```
 * Removed repetition in ```restrict_access()```, called ```is_logged_in()``` for login check
 * Fixed display bugs, formatting issues in README
+* Fixed bug in ```do_logout()```
 
 **1.2.0**
 
