@@ -186,3 +186,8 @@ Change Log
 * Added config item for a default ```login_success_url```. Use this if you don't set the ```login_success_url_field``` in the users or roles table.
 * Removed duplicate config item: ```logged_out_message```
 * Added an example folder with an authentication controller, views, and a restricted page.
+
+Thanks to
+============================
+
+* [Ali Fatahi](http://disqus.com/guest/5e01ff5649c16170722126f43745ae73/) for some excellent suggestions on improving the library.
