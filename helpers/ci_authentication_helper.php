@@ -10,16 +10,35 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_helper.php
- * @version		1.1.10
- * @date		03/05/2012
+ * @version		1.2.0
+ * @date		03/09/2012
  */
+
+// --------------------------------------------------------------------------
+
+/**
+ * auth_id function.
+ *
+ * Returns id from session with configurable id field value.
+ * 
+ * @access public
+ * @return void
+ */
+function auth_id()
+{
+	$_ci =& get_instance();
+	$_ci->load->library('session');
+	$_ci->config->load('ci_authentication');
+	
+	return $_ci->session->userdata(config_item('user_id_field'));
+}
 
 // --------------------------------------------------------------------------
 
 /**
  * auth_username function.
  *
- * username from session with configurable username field value
+ * Returns username from session with configurable username field value.
  * 
  * @access public
  * @return void
@@ -38,7 +57,7 @@ function auth_username()
 /**
  * auth_password function.
  *
- * password from session with configurable password field value
+ * Returns password from session with configurable password field value.
  * 
  * @access public
  * @return void
@@ -50,6 +69,23 @@ function auth_password()
 	$_ci->config->load('ci_authentication');
 	
 	return $_ci->session->userdata(config_item('password_field'));
+}
+
+// --------------------------------------------------------------------------
+
+/**
+ * is_logged_in function.
+ *
+ * Shortcut to $this->ci_authentication->is_logged_in(). Useful in views.
+ * 
+ * @access public
+ * @return void
+ */
+function is_logged_in()
+{
+	$_ci =& get_instance();
+	$_ci->load->library('ci_authentication');
+	return $_ci->ci_authentication->is_logged_in();
 }
 
 // --------------------------------------------------------------------------

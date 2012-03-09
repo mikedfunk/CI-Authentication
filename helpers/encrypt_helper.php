@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		
- * @version		1.1.10
- * @date		03/05/2012
+ * @version		1.2.0
+ * @date		03/09/2012
  * 
  * Copyright (c) 2011
  */
@@ -32,16 +32,22 @@
  */
 function encrypt_this($password, $salt = '')
 {
-	$CI =& get_instance();
+	$_ci =& get_instance();
+	$_ci->config->load('ci_authentication');
 	
+	// set the salt if not set
 	if ($salt == '') {
-		$CI->load->helper('string');
-		$salt = random_string('alnum', 64);
+		$_ci->load->helper('string');
+		$salt = random_string('alnum', config_item('salt_length'));
 	}
 	
-	// Prefix the password with the salt
-	// $hash = $salt . $password;
-	$hash = $salt . $password . $CI->config->item('encryption_key');
+	// Prefix the password with the salt, add configured stuff
+	$hash = $salt . $password;
+	if (config_item('login_with_encryption_key'))
+	{
+		$hash .= $_ci->config->item('encryption_key');
+	}
+	
 	// Hash the salted password a bunch of times
 	for ( $i = 0; $i < 53; $i ++ ) {
 		$hash = hash('sha256', $hash);

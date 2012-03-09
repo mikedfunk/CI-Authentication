@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.1.10
- * @date		03/05/2012
+ * @version		1.2.0
+ * @date		03/09/2012
  */
 
 // --------------------------------------------------------------------------
@@ -48,8 +48,27 @@ class ci_authentication
 		$this->_ci =& get_instance();
 		log_message('debug', 'CI Authentication: library initialized.');
 		
-		$this->_ci->load->spark('ci_alerts/1.1.4');
+		$this->_ci->load->spark('ci_alerts/1.1.5');
 		log_message('debug', 'CI Authentication: CI Alerts spark initialized.');
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * is_logged_in function.
+	 *
+	 * Runs password_check in the model against session variables.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function is_logged_in()
+	{
+		$this->_ci->load->library('session');
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
+		$username = $this->_ci->session->userdata('username');
+		$password = $this->_ci->session->userdata('password');
+		return $this->_ci->auth_model->password_check($username, $password, TRUE);
 	}
 	
 	// --------------------------------------------------------------------------
@@ -154,6 +173,28 @@ class ci_authentication
 	// --------------------------------------------------------------------------
 	
 	/**
+	 * set_user_status function.
+	 *
+	 * Sets user status to a value such as active, inactive, blocked.
+	 * 
+	 * @access public
+	 * @param int $id
+	 * @param string $status
+	 * @return bool
+	 */
+	public function set_user_status($id, $status)
+	{
+		$this->_ci->load->model('ci_authentication_model', 'auth_model');
+		$post = array(
+			'id' => $id,
+			config_item('user_status_field') => $status
+		);
+		return $this->_ci->auth_model->edit_user($post);
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
 	 * do_login function.
 	 *
 	 * hashes and salts password, logs in user to session, redirects to 
@@ -179,8 +220,7 @@ class ci_authentication
 		$user_only = $q->row_array();
 		
 		// set a new salt, re-encrypt the password
-		$salt = random_string('alnum', config_item('salt_length'));
-		$user[config_item('password_field')] = $user_only[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')), $salt);
+		$user[config_item('password_field')] = $user_only[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')));
 		
 		// edit the user and set new userdata
 		$check = $this->_ci->auth_model->edit_user($user_only);
