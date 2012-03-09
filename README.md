@@ -167,6 +167,7 @@ Change Log
 * Added helper function ```is_logged_in()``` as a shortcut to the library method to check if a user is logged in. Useful in views.
 * Added config item ```user_status_field``` for the user status field name in the db.
 * Added library method ```set_user_status()``` to change a user's status. For instance active, inactive, or blocked.
+* Updated **setup.sql** to account for user status. Removed roles.
 * Added config item ```login_with_encryption_key```. If true, password string is mixed with the configured encryption key. Leave this true for security!
 * Updated encrypt_helper to limit by encryption key if config values are true.
 * Updated encrypt_helper to get the salt length from the config.

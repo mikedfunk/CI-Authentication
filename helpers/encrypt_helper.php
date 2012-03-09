@@ -9,7 +9,7 @@
  * @link		http://mikefunk.com
  * @email		mike@mikefunk.com
  * 
- * @file		
+ * @file		encrypt_helper.php
  * @version		1.2.0
  * @date		03/09/2012
  * 
