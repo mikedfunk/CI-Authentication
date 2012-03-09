@@ -251,6 +251,7 @@ class ci_authentication
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
+		$this->_ci->session->unset_userdata(config_item('password_field'));
 		$this->_ci->ci_alerts->set('success', config_item('logged_out_message'));
 		redirect(config_item('logout_success_url'));
 	}
