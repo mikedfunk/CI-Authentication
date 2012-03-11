@@ -167,6 +167,7 @@ Change Log
 * Fixed display bugs, formatting issues in README
 * Fixed bug in ```do_logout()```
 * Autoload ```config/ci_authentication.php```
+* Changed ```do_logout()``` to unset the username rather than the password
 
 **1.2.0**
 
