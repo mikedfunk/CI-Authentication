@@ -10,10 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		auth.php
- * @version		1.2.1
- * @date		03/09/2012
- * 
- * Copyright (c) 2012
+ * @version		1.2.2
+ * @date		03/13/2012
  */
 
 // --------------------------------------------------------------------------
@@ -183,9 +181,9 @@ class auth extends CI_Controller
 		$this->load->library('form_validation');
 		
 		// form validation
-		$this->form_validation->set_rules('email_address', 'Email Address', 'trim|required|valid_email|is_unique[users.email_address]');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required');
-		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[password]');
+		$this->form_validation->set_rules(config_item('username_field'), 'Email Address', 'trim|required|valid_email|is_unique[' . config_item('users_table') . '.' . config_item('username_field') . ']');
+		$this->form_validation->set_rules(config_item('password_field'), 'Password', 'trim|required');
+		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|matches[' . config_item('password_field') . ']');
 		if ($this->form_validation->run() == FALSE)
 		{
 			// load view

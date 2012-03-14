@@ -160,12 +160,24 @@ Shortcut to ```$this->ci_authentication->is_logged_in()```. Useful in views.
 Change Log
 ============================
 
+**1.2.2**
+
+* Fixed bug in register() with hardcoded username and password fields.
+* Fixed bug where ```role_id``` was being set in ```do_register()``` when the ```roles_table``` config item was empty.
+* Fixed bug where email config was not automatically set to HTML.
+* Fixed bug with resetting password: Temp passwords were not matching.
+* Added email views to **example/views** folder.
+* Removed unnecessary salt creation in library.
+* Made error logging more consistent (CI Authentication instead of Authentication).
+
 **1.2.1**
 
 * Fixed bug in ```is_logged_in()```
 * Removed repetition in ```restrict_access()```, called ```is_logged_in()``` for login check
 * Fixed display bugs, formatting issues in README
 * Fixed bug in ```do_logout()```
+* Autoload ```config/ci_authentication.php```
+* Changed ```do_logout()``` to unset the username rather than the password
 
 **1.2.0**
 

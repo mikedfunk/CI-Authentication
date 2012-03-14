@@ -10,10 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		encrypt_helper.php
- * @version		1.2.1
- * @date		03/09/2012
- * 
- * Copyright (c) 2011
+ * @version		1.2.2
+ * @date		03/13/2012
  */
  
 // --------------------------------------------------------------------------
@@ -33,7 +31,7 @@
 function encrypt_this($password, $salt = '')
 {
 	$_ci =& get_instance();
-	$_ci->config->load('ci_authentication');
+	// $_ci->config->load('ci_authentication');
 	
 	// set the salt if not set
 	if ($salt == '') {

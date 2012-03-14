@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.2.1
- * @date		03/09/2012
+ * @version		1.2.2
+ * @date		03/13/2012
  */
 
 // --------------------------------------------------------------------------
@@ -220,7 +220,7 @@ class ci_authentication
 		$this->_ci->session->set_userdata($user);
 		
 		// log errors
-		if (!$check) {log_message('error', 'Authentication: error editing user during login.');}
+		if (!$check) {log_message('error', 'CI Authentication: error editing user during login.');}
 		
 		// redirect to login_success_url, either as a db field or a configured url
 		$this->_ci->ci_alerts->set('success', config_item('logged_in_message'));
@@ -251,7 +251,7 @@ class ci_authentication
 		$this->_ci->load->helper('url');
 		
 		$this->_ci->session->sess_destroy();
-		$this->_ci->session->unset_userdata(config_item('password_field'));
+		$this->_ci->session->unset_userdata(config_item('username_field'));
 		$this->_ci->ci_alerts->set('success', config_item('logged_out_message'));
 		redirect(config_item('logout_success_url'));
 	}
@@ -275,11 +275,13 @@ class ci_authentication
 		// get user, unset confirm password, set salt
 		$user = $this->_ci->input->post();
 		unset($user['confirm_password']);
-		$salt = random_string('alnum', config_item('salt_length'));
 		
 		// set role_id, encrypt the password, set a new confirm_string
-		$user[config_item('role_id_field')] = config_item('user_role_id');
-		$user[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')), $salt);
+		if (config_item('roles_table') != '')
+		{
+			$user[config_item('role_id_field')] = config_item('user_role_id');
+		}
+		$user[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')));
 		$user[config_item('confirm_string_field')] = $confirm_string = random_string('alnum', 20);
 		
 		// add the user, send email, redirect.
@@ -312,7 +314,7 @@ class ci_authentication
 		}
 		else
 		{
-			log_message('error', 'Authentication: resend register email: confirm string found.');
+			log_message('error', 'CI Authentication: resend register email: confirm string found.');
 		}
 	}
 	
@@ -333,6 +335,7 @@ class ci_authentication
 		$this->_ci->load->library(array('email', 'session'));
 		
 		// from, to, url, content
+		$this->_email_init();
 		$this->_ci->email->from(config_item('register_email_from'), config_item('register_email_from_name'));
 		$this->_ci->email->to($user_array[config_item('username_field')]);
 		
@@ -395,7 +398,7 @@ class ci_authentication
 		// on no match
 		else
 		{
-			log_message('error', 'Authentication: confirm register fail.');
+			log_message('error', 'CI Authentication: confirm register fail.');
 			
 			// redirect to confirm fail page
 			$this->_ci->ci_alerts->set('error', config_item('confirm_register_fail_message'));
@@ -419,6 +422,7 @@ class ci_authentication
 		$this->_ci->load->library(array('email', 'session'));
 		
 		// email reset password link
+		$this->_email_init();
 
 		// from, to, url, content
 		$this->_ci->email->from(config_item('request_reset_email_from'), config_item('request_reset_email_from_name'));
@@ -474,15 +478,17 @@ class ci_authentication
 			{
 				// set new password, update user
 				$user = $q->row();
-				$salt = random_string('alnum', config_item('salt_length'));
 				$data['new_password'] = $new_password = random_string('alnum', 8);
+				$encrypted = encrypt_this($new_password);
+				
 				$update = array(
 					'id' => $user->id,
-					'password' => encrypt_this($new_password, $salt)
+					'password' => $encrypted
 				);
 				$this->_ci->auth_model->edit_user($update);
 				
 				// email new password
+				$this->_email_init();
 		
 				// from, to, url, content
 				$this->_ci->email->from(config_item('confirm_reset_email_from'), config_item('confirm_reset_email_from_name'));
@@ -509,13 +515,29 @@ class ci_authentication
 			}
 			else
 			{
-				log_message('error', 'Authentication: confirm reset password link with user not found in database.');
+				log_message('error', 'CI Authentication: confirm reset password link with user not found in database.');
 			}
 		}
 		else
 		{
-			log_message('error', 'Authentication: confirm reset password link with non-matching username and encrypted username.');
+			log_message('error', 'CI Authentication: confirm reset password link with non-matching username and encrypted username.');
 		}
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * _email_init function.
+	 *
+	 * Initializes email with config items. Assumes email lib is loaded.
+	 * 
+	 * @access private
+	 * @return void
+	 */
+	private function _email_init()
+	{
+		$config['mailtype'] = 'html';
+		$this->_ci->email->initialize($config);
 	}
 	
 	// --------------------------------------------------------------------------
