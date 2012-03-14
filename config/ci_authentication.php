@@ -142,6 +142,15 @@ $config['salt_length'] = 64;
 
 // --------------------------------------------------------------------------
 /**
+ * do_register_email
+ * 
+ * Whether to send the registration confirmation email or just skip to
+ * do_login.
+ */
+$config['do_register_email'] = TRUE;
+
+// --------------------------------------------------------------------------
+/**
  * email from addresses
  *
  * The reply-to email address for registration emails and others.
