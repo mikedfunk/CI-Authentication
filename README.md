@@ -160,6 +160,10 @@ Shortcut to ```$this->ci_authentication->is_logged_in()```. Useful in views.
 Change Log
 ============================
 
+**1.2.2**
+
+* Fixed bug in register() with hardcoded username and password fields.
+
 **1.2.1**
 
 * Fixed bug in ```is_logged_in()```
