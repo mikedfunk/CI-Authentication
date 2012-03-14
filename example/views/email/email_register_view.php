@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		email_register_view.php
- * @version		1.2.2
- * @date		03/13/2012
+ * @version		1.3.0
+ * @date		03/14/2012
  */
 
 // --------------------------------------------------------------------------

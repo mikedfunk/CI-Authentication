@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_model.php
- * @version		1.2.2
- * @date		03/13/2012
+ * @version		1.3.0
+ * @date		03/14/2012
  */
 
 // --------------------------------------------------------------------------
@@ -52,20 +52,20 @@ class ci_authentication_model extends CI_Model
 	 * @access public
 	 * @param string $username
 	 * @param string $password
-	 * @param bool $encrypted (default: false)
+	 * @param bool $encrypted (default: FALSE)
 	 * @return bool
 	 */
-	public function password_check($username, $password, $encrypted = false)
+	public function password_check($username, $password, $encrypted = FALSE)
 	{	
 		// check for blanks
-		if ($username == '' || $password == '') { return false; }
+		if ($username == '' || $password == '') { return FALSE; }
 		
 		// check for existing email
 		$q = $this->get_user_by_username($username);
 		
 		if ($q->num_rows() == 0)
 		{
-			return false;
+			return FALSE;
 		}
 		// if it exists, *then* check for matching password
 		else
@@ -83,11 +83,11 @@ class ci_authentication_model extends CI_Model
 			$q = $this->db->get(config_item('users_table'));
 			if ($q->num_rows() == 0)
 			{
-				return false;
+				return FALSE;
 			}
 			else
 			{
-				return true;
+				return TRUE;
 			}
 		}
 	}
@@ -114,11 +114,11 @@ class ci_authentication_model extends CI_Model
 		$q = $this->get_user_by_username($username);
 		if ($q->num_rows() == 0)
 		{
-			return false;
+			return FALSE;
 		}
 		else
 		{
-			return true;
+			return TRUE;
 		}
 	}
 	
@@ -140,11 +140,11 @@ class ci_authentication_model extends CI_Model
 		$q = $this->db->get(config_item('users_table'));
 		if ($q->num_rows() > 0)
 		{
-			return true;
+			return TRUE;
 		}
 		else
 		{
-			return false;
+			return FALSE;
 		}
 	}
 	
@@ -225,16 +225,10 @@ class ci_authentication_model extends CI_Model
 	 * 
 	 * @access public
 	 * @param array $post
-	 * @param bool $password_encrypted (default: TRUE)
 	 * @return bool
 	 */
-	public function edit_user_by_username($post, $password_encrypted = TRUE)
+	public function edit_user_by_username($post)
 	{
-		// encrypt password if not encrypted
-		if (!$password_encrypted && isset($post[config_item('password_field')]))
-		{
-			$password = encrypt_this($post[config_item('password_field')]);
-		}
 		$this->db->where(config_item('username_field'), $post[config_item('username_field')]);
 		return $this->db->update(config_item('users_table'), $post);
 	}
