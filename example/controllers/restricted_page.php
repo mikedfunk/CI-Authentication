@@ -33,7 +33,7 @@ class restricted_page extends CI_Controller
 	 */
 	public function index()
 	{
-		$this->load->spark('ci_authentication/1.2.1');
+		$this->load->spark('ci_authentication/1.2.2');
 		
 		// redirects you to the configured login page if not logged in.
 		$this->ci_authentication->restrict_access();
