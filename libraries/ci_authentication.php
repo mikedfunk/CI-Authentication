@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.2.2
- * @date		03/13/2012
+ * @version		1.3.0
+ * @date		03/14/2012
  */
 
 // --------------------------------------------------------------------------
@@ -286,7 +286,16 @@ class ci_authentication
 		
 		// add the user, send email, redirect.
 		$check = $this->_ci->auth_model->add_user($user);
-		$this->_send_register_email($user);
+		
+		if (config_item('do_register_email'))
+		{
+			$this->_send_register_email($user);
+		}
+		else
+		{
+			$this->do_confirm_register($confirm_string, FALSE);
+			$this->do_login();
+		}
 	}
 	
 	// --------------------------------------------------------------------------
@@ -370,9 +379,10 @@ class ci_authentication
 	 * 
 	 * @access public
 	 * @param mixed $confirm_string
+	 * @param bool $redirect (default: TRUE)
 	 * @return void
 	 */
-	public function do_confirm_register($confirm_string)
+	public function do_confirm_register($confirm_string, $redirect = TRUE)
 	{
 		// check for user with confirm_string
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
@@ -393,7 +403,10 @@ class ci_authentication
 			
 			// redirect to confirm success page
 			$this->_ci->ci_alerts->set('success', config_item('confirm_register_success_message'));
-			redirect(config_item('confirm_register_success_url'));
+			if ($redirect)
+			{
+				redirect(config_item('confirm_register_success_url'));
+			}
 		}
 		// on no match
 		else
@@ -402,7 +415,10 @@ class ci_authentication
 			
 			// redirect to confirm fail page
 			$this->_ci->ci_alerts->set('error', config_item('confirm_register_fail_message'));
-			redirect(config_item('confirm_register_fail_url'));
+			if ($redirect)
+			{
+				redirect(config_item('confirm_register_fail_url'));
+			}
 		}
 	}
 	

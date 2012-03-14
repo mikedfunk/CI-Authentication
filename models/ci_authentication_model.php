@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_model.php
- * @version		1.2.2
- * @date		03/13/2012
+ * @version		1.3.0
+ * @date		03/14/2012
  */
 
 // --------------------------------------------------------------------------
@@ -28,7 +28,7 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * __construct function.
 	 *
-	 * load common resources.
+	 * Load common resources.
 	 * 
 	 * @access public
 	 * @return void
@@ -46,26 +46,26 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * password_check function.
 	 *
-	 * checks whether the password for a given user matches the passed password
+	 * Checks whether the password for a given user matches the passed password
 	 * after being encrypted.
 	 * 
 	 * @access public
 	 * @param string $username
 	 * @param string $password
-	 * @param bool $encrypted (default: false)
+	 * @param bool $encrypted (default: FALSE)
 	 * @return bool
 	 */
-	public function password_check($username, $password, $encrypted = false)
+	public function password_check($username, $password, $encrypted = FALSE)
 	{	
 		// check for blanks
-		if ($username == '' || $password == '') { return false; }
+		if ($username == '' || $password == '') { return FALSE; }
 		
 		// check for existing email
 		$q = $this->get_user_by_username($username);
 		
 		if ($q->num_rows() == 0)
 		{
-			return false;
+			return FALSE;
 		}
 		// if it exists, *then* check for matching password
 		else
@@ -83,11 +83,11 @@ class ci_authentication_model extends CI_Model
 			$q = $this->db->get(config_item('users_table'));
 			if ($q->num_rows() == 0)
 			{
-				return false;
+				return FALSE;
 			}
 			else
 			{
-				return true;
+				return TRUE;
 			}
 		}
 	}
@@ -97,22 +97,28 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * username_check function.
 	 *
-	 * checks whether a user by this username exists.
+	 * Checks whether a user by this username exists.
 	 * 
 	 * @access public
-	 * @param mixed $username
+	 * @param string $username
+	 * @param string $not_username (default: '')
 	 * @return bool
 	 */
-	public function username_check($username)
+	public function username_check($username, $not_username = '')
 	{
+		// exclude not_username if set
+		if ($not_username != '')
+		{
+			$this->db->where(config_item('username_field') . ' !=', $not_username);
+		}
 		$q = $this->get_user_by_username($username);
 		if ($q->num_rows() == 0)
 		{
-			return false;
+			return FALSE;
 		}
 		else
 		{
-			return true;
+			return TRUE;
 		}
 	}
 	
@@ -121,7 +127,7 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * confirm_string_check function.
 	 *
-	 * checks to make sure this username does not have a confirm string
+	 * Checks to make sure this username does not have a confirm string
 	 * 
 	 * @access public
 	 * @param mixed $username
@@ -134,11 +140,11 @@ class ci_authentication_model extends CI_Model
 		$q = $this->db->get(config_item('users_table'));
 		if ($q->num_rows() > 0)
 		{
-			return true;
+			return TRUE;
 		}
 		else
 		{
-			return false;
+			return FALSE;
 		}
 	}
 	
@@ -147,14 +153,14 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * get_user_by_username function.
 	 *
-	 * returns the query for a user based on a passed username.
+	 * Returns the query for a user based on a passed username.
 	 * 
 	 * @access public
 	 * @param mixed $username
-	 * @param mixed $join (default: true) whether to join in the role.
+	 * @param mixed $join (default: TRUE) whether to join in the role.
 	 * @return object
 	 */
-	public function get_user_by_username($username, $join = true)
+	public function get_user_by_username($username, $join = TRUE)
 	{
 		$ut = config_item('users_table');
 		$rt = config_item('roles_table');
@@ -167,7 +173,7 @@ class ci_authentication_model extends CI_Model
 				$ut . '.id,' .
 				$ut . '.' . config_item('username_field') . ',' .
 				$ut . '.' . config_item('password_field') . ',' .
-				$ut . '.' . config_item('confirm_string_field') . ','
+				$ut . '.' . config_item('confirm_string_field')
 			);
 			$this->db->join($rt, $rt . '.id = ' . $ut . '.' . config_item('role_id_field'), 'left');
 		}
@@ -181,7 +187,7 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * get_user_by_confirm_string function.
 	 *
-	 * returns the query for a user with the passed confirm string
+	 * Returns the query for a user with the passed confirm string.
 	 * 
 	 * @access public
 	 * @param mixed $confirm_string
@@ -198,7 +204,7 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * edit_user function.
 	 *
-	 * edits a user passed via an array.
+	 * Edits a user passed via an array.
 	 * 
 	 * @access public
 	 * @param array $post
@@ -213,9 +219,26 @@ class ci_authentication_model extends CI_Model
 	// --------------------------------------------------------------------------
 	
 	/**
+	 * edit_user_by_username function.
+	 *
+	 * Edits a user passed via an array.
+	 * 
+	 * @access public
+	 * @param array $post
+	 * @return bool
+	 */
+	public function edit_user_by_username($post)
+	{
+		$this->db->where(config_item('username_field'), $post[config_item('username_field')]);
+		return $this->db->update(config_item('users_table'), $post);
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
 	 * add_user function.
 	 *
-	 * adds a user passed via an array.
+	 * Adds a user passed via an array.
 	 * 
 	 * @access public
 	 * @param array $post

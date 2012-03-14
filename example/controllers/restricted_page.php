@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		restricted_page.php
- * @version		1.2.2
- * @date		03/13/2012
+ * @version		1.3.0
+ * @date		03/14/2012
  */
 
 // --------------------------------------------------------------------------
@@ -33,7 +33,7 @@ class restricted_page extends CI_Controller
 	 */
 	public function index()
 	{
-		$this->load->spark('ci_authentication/1.2.2');
+		$this->load->spark('ci_authentication/1.3.0');
 		
 		// redirects you to the configured login page if not logged in.
 		$this->ci_authentication->restrict_access();

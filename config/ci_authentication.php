@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.2.2
- * @date		03/13/2012
+ * @version		1.3.0
+ * @date		03/14/2012
  */
 
 // --------------------------------------------------------------------------
@@ -139,6 +139,15 @@ $config['remember_me_timeout'] = 60 * 60 * 24 * 365;
  * The length of the salt string to be added to / parsed from the password.
  */
 $config['salt_length'] = 64;
+
+// --------------------------------------------------------------------------
+/**
+ * do_register_email
+ * 
+ * Whether to send the registration confirmation email or just skip to
+ * do_login.
+ */
+$config['do_register_email'] = TRUE;
 
 // --------------------------------------------------------------------------
 /**

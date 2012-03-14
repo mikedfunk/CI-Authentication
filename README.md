@@ -160,6 +160,13 @@ Shortcut to ```$this->ci_authentication->is_logged_in()```. Useful in views.
 Change Log
 ============================
 
+**1.3.0**
+
+* Feature release, no bugfixes.
+* Added ability to skip the confirmation email on registration and log the user right in. This can be toggled in ```config/ci_authentication.php``` with the property ```do_register_email```.
+* Added a model method to ```edit_user_by_username()``` when you don't have the user ID.
+* Added param ```$not_username``` to ```username_check()``` in the model, allowing you to check for duplicates excluding the current username.
+
 **1.2.2**
 
 * Fixed bug in register() with hardcoded username and password fields.
