@@ -163,6 +163,12 @@ Change Log
 **1.2.2**
 
 * Fixed bug in register() with hardcoded username and password fields.
+* Fixed bug where ```role_id``` was being set in ```do_register()``` when the ```roles_table``` config item was empty.
+* Fixed bug where email config was not automatically set to HTML.
+* Fixed bug with resetting password: Temp passwords were not matching.
+* Added email views to **example/views** folder.
+* Removed unnecessary salt creation in library.
+* Made error logging more consistent (CI Authentication instead of Authentication).
 
 **1.2.1**
 
