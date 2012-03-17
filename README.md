@@ -160,6 +160,11 @@ Shortcut to ```$this->ci_authentication->is_logged_in()```. Useful in views.
 Change Log
 ============================
 
+**1.3.1**
+
+* Added my_profile to example in views and auth controller
+* Uncommented dependency on ci_alerts
+
 **1.3.0**
 
 * Feature release, no bugfixes.
