@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_model.php
- * @version		1.3.1
- * @date		03/17/2012
+ * @version		1.3.2
+ * @date		03/20/2012
  */
 
 // --------------------------------------------------------------------------
@@ -127,10 +127,10 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * confirm_string_check function.
 	 *
-	 * Checks to make sure this username does not have a confirm string
+	 * Checks to make sure this username does not have a confirm string.
 	 * 
 	 * @access public
-	 * @param mixed $username
+	 * @param string $username
 	 * @return bool
 	 */
 	public function confirm_string_check($username)
@@ -151,35 +151,43 @@ class ci_authentication_model extends CI_Model
 	// --------------------------------------------------------------------------
 	
 	/**
-	 * get_user_by_username function.
+	 * get_role function.
 	 *
-	 * Returns the query for a user based on a passed username.
+	 * Returns the query object for a role by id.
 	 * 
 	 * @access public
-	 * @param mixed $username
-	 * @param mixed $join (default: TRUE) whether to join in the role.
+	 * @param int $id
 	 * @return object
 	 */
-	public function get_user_by_username($username, $join = TRUE)
+	public function get_role($id)
 	{
-		$ut = config_item('users_table');
-		$rt = config_item('roles_table');
-		
-		// join in roles
-		if ($join && $rt != '')
+		$this->db->where('id', $id);
+		return $this->db->get(config_item('roles_table'));
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	/**
+	 * get_user_by_username function.
+	 *
+	 * Returns the query object for a user based on a passed username.
+	 * 
+	 * @access public
+	 * @param string $username
+	 * @return object
+	 */
+	public function get_user_by_username($username)
+	{
+		// if roles table is set, join it in
+		if (config_item('roles_table') != '')
 		{
-			$this->db->select(
-				$rt . '.*,' .
-				$ut . '.id,' .
-				$ut . '.' . config_item('username_field') . ',' .
-				$ut . '.' . config_item('password_field') . ',' .
-				$ut . '.' . config_item('confirm_string_field')
-			);
-			$this->db->join($rt, $rt . '.id = ' . $ut . '.' . config_item('role_id_field'), 'left');
+			$rt = config_item('roles_table');
+			$ut = config_item('users_table');
+			$this->db->select($rt . '.*, ' . $ut . '.*');
+			$this->db->join($rt, $rt . '.id = ' . $ut . '.' . config_item('role_id_field'));
 		}
-		
 		$this->db->where(config_item('username_field'), $username);
-		return $this->db->get($ut);
+		return $this->db->get(config_item('users_table'));
 	}
 	
 	// --------------------------------------------------------------------------
@@ -187,11 +195,11 @@ class ci_authentication_model extends CI_Model
 	/**
 	 * get_user_by_confirm_string function.
 	 *
-	 * Returns the query for a user with the passed confirm string.
+	 * Returns the query object for a user with the passed confirm string.
 	 * 
 	 * @access public
-	 * @param mixed $confirm_string
-	 * @return void
+	 * @param string $confirm_string
+	 * @return object
 	 */
 	public function get_user_by_confirm_string($confirm_string)
 	{
