@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.3.1
- * @date		03/17/2012
+ * @version		1.3.2
+ * @date		03/20/2012
  */
 
 // --------------------------------------------------------------------------
@@ -205,18 +205,19 @@ class ci_authentication
 		unset($_POST['confirm_password']);
 		unset($_POST['temp_password']);
 		
-		// set session vars, redirect to admin home
-		$q = $this->_ci->auth_model->get_user_by_username($this->_ci->input->post(config_item('username_field')));
-		$user = $q->row_array();
+		// set session vars, re-salt user, redirect to configured url
 		
-		$q = $this->_ci->auth_model->get_user_by_username($this->_ci->input->post(config_item('username_field')), FALSE);
-		$user_only = $q->row_array();
+		// get the user id, add the username
+		$q = $this->_ci->auth_model->get_user_by_username($this->_ci->input->post(config_item('username_field')));
+		$user_row = $q->row_array();
+		$user[config_item('user_id_field')] = $user_row[config_item('user_id_field')];
+		$user[config_item('username_field')] = $this->_ci->input->post(config_item('username_field'));
 		
 		// set a new salt, re-encrypt the password
-		$user[config_item('password_field')] = $user_only[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')));
+		$user[config_item('password_field')] = encrypt_this($this->_ci->input->post(config_item('password_field')));
 		
-		// edit the user and set new userdata
-		$check = $this->_ci->auth_model->edit_user($user_only);
+		// edit the user and set new session userdata
+		$check = $this->_ci->auth_model->edit_user($user);
 		$this->_ci->session->set_userdata($user);
 		
 		// log errors
@@ -226,12 +227,9 @@ class ci_authentication
 		$this->_ci->ci_alerts->set('success', config_item('logged_in_message'));
 		if (config_item('login_success_url_field') != '')
 		{
-			redirect($this->_ci->session->userdata(config_item('login_success_url_field')));
+			redirect($user_row[config_item('login_success_url_field')]);
 		}
-		else
-		{
-			redirect(config_item('login_success_url'));
-		}
+		redirect(config_item('login_success_url'));
 	}
 
 	// --------------------------------------------------------------------------
@@ -277,7 +275,7 @@ class ci_authentication
 		unset($user['confirm_password']);
 		
 		// set role_id, encrypt the password, set a new confirm_string
-		if (config_item('roles_table') != '')
+		if (config_item('user_role_id') != '' && config_item('role_id_field') != '')
 		{
 			$user[config_item('role_id_field')] = config_item('user_role_id');
 		}

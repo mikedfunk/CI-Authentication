@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.3.1
- * @date		03/17/2012
+ * @version		1.3.2
+ * @date		03/20/2012
  */
 
 // --------------------------------------------------------------------------
@@ -27,7 +27,7 @@ $config['users_table'] = 'users';
  * roles_table
  *
  * The table to pull roles from. If you don't have a separate roles table, 
- * leave this blank and it won't be joined in.
+ * just leave this blank.
  */
 $config['roles_table'] = '';
 
@@ -91,16 +91,6 @@ $config['login_success_url'] = 'dashboard';
 
 // --------------------------------------------------------------------------
 /**
- * login_success_url_field
- *
- * Ihe field in the db and session used for redirecting to after successful
- * login (in the roles or users table) leave blank if you don't have this in
- * the db.
- */
-$config['login_success_url_field'] = '';
-
-// --------------------------------------------------------------------------
-/**
  * confirm_string_field
  *
  * The field in the db assigned to a user that has not yet confirmed 
@@ -112,17 +102,17 @@ $config['confirm_string_field'] = 'confirm_string';
 /**
  * role_id_field
  *
- * The field used to join role_id (in the users table).
+ * The field used to assign role_id on register.
  */
-$config['role_id_field'] = 'role_id';
+$config['role_id_field'] = '';
 
 // --------------------------------------------------------------------------
 /**
  * user_role_id (int)
  *
- * The role id for users to be assigned.
+ * The role id for users to be assigned on register.
  */
-$config['user_role_id'] = 1;
+$config['user_role_id'] = '';
 
 // --------------------------------------------------------------------------
 /**

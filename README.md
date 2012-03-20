@@ -160,6 +160,12 @@ Shortcut to ```$this->ci_authentication->is_logged_in()```. Useful in views.
 Change Log
 ============================
 
+**1.3.2**
+
+* Changed login to only set session data of user id, encrypted pw, and username. (very important so as not to overload the session cookie with role data!)
+* Simplified redirection to role-specific url.
+* Updated role_id_field check in ```do_register()``` to only check for the things it needs.
+
 **1.3.1**
 
 * Added my_profile to example in views and auth controller
