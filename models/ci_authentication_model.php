@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication_model.php
- * @version		1.3.2
- * @date		03/20/2012
+ * @version		1.3.3
+ * @date		03/28/2012
  */
 
 // --------------------------------------------------------------------------
@@ -220,7 +220,7 @@ class ci_authentication_model extends CI_Model
 	 */
 	public function edit_user($post)
 	{
-		$this->db->where('id', $post['id']);
+		$this->db->where(config_item('user_id_field'), $post[config_item('user_id_field')]);
 		return $this->db->update(config_item('users_table'), $post);
 	}
 	

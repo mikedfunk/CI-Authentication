@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.3.2
- * @date		03/20/2012
+ * @version		1.3.3
+ * @date		03/28/2012
  */
 
 // --------------------------------------------------------------------------
@@ -179,7 +179,7 @@ class ci_authentication
 	{
 		$this->_ci->load->model('ci_authentication_model', 'auth_model');
 		$post = array(
-			'id' => $id,
+			config_item('user_id_field') => $id,
 			config_item('user_status_field') => $status
 		);
 		return $this->_ci->auth_model->edit_user($post);
@@ -393,8 +393,9 @@ class ci_authentication
 		{	
 			// remove confirm string from user
 			$r = $q->row();
+			$id_field = config_item('user_id_field');
 			$user = array(
-				'id' => $r->id,
+				$id_field => $r->$id_field,
 				config_item('confirm_string_field') => ''
 			);
 			$this->_ci->auth_model->edit_user($user);
@@ -495,8 +496,9 @@ class ci_authentication
 				$data['new_password'] = $new_password = random_string('alnum', 8);
 				$encrypted = encrypt_this($new_password);
 				
+				$id_field = config_item('user_id_field');
 				$update = array(
-					'id' => $user->id,
+					$id_field => $user->$id_field,
 					'password' => $encrypted
 				);
 				$this->_ci->auth_model->edit_user($update);

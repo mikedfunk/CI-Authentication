@@ -10,9 +10,9 @@ Setup
 2. [Install this spark](http://getsparks.org/packages/ci\_authentication/versions/HEAD/show)
 2. Edit **config/ci\_authentication.php** with the proper stuff like redirect urls, etc.
 3. Import **setup.sql** in PHPMyAdmin or something
-4. Load the spark: ```$this->load->spark('ci\_authentication/x.x.x');```
+4. Load the spark: ```$this->load->spark('ci_authentication/x.x.x');```
 
-***NOTE: Be sure you also have [CI Alerts](https://github.com/mikedfunk/CI-Alerts) version 1.1.6 as a spark and load it. CI Alerts are required for CI Authentication. This spark requires CI Alerts as a dependency, but double-check that you have it.***
+***NOTE: Be sure you also have [CI Alerts](https://github.com/mikedfunk/CI-Alerts) version 1.1.7 as a spark and load it. CI Alerts are required for CI Authentication. This spark requires CI Alerts as a dependency, but double-check that you have it.***
 
 restrict\_access()
 ----------------------------
@@ -159,6 +159,11 @@ Shortcut to ```$this->ci_authentication->is_logged_in()```. Useful in views.
 
 Change Log
 ============================
+
+**1.3.3**
+
+* Thanks to [brianjoley](https://github.com/brianjolney) - Fixed bug where user id was hardcoded but should have used field name from config file.
+* Updated [ci_alerts](http://getsparks.org/packages/ci_alerts/versions/HEAD/show) dependency to 1.1.7 which fixes a bug.
 
 **1.3.2**
 

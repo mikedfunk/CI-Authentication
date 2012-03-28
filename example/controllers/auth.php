@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		auth.php
- * @version		1.3.2
+ * @version		1.3.3
  * @date		03/20/2012
  */
 
@@ -34,6 +34,7 @@ class auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->spark('ci_authentication/1.3.3');
 	}
 	
 	// --------------------------------------------------------------------------
