@@ -10,7 +10,7 @@
  * @email		mike@mikefunk.com
  * 
  * @file		encrypt_helper.php
- * @version		1.3.2
+ * @version		1.3.3
  * @date		03/20/2012
  */
  
