@@ -48,7 +48,7 @@ class ci_authentication
 		$this->_ci =& get_instance();
 		log_message('debug', 'CI Authentication: library initialized.');
 		
-		$this->_ci->load->spark('ci_alerts/1.1.6');
+		$this->_ci->load->spark('ci_alerts/1.1.7');
 		log_message('debug', 'CI Authentication: CI Alerts spark initialized.');
 	}
 	
