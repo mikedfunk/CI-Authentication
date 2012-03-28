@@ -12,7 +12,7 @@ Setup
 3. Import **setup.sql** in PHPMyAdmin or something
 4. Load the spark: ```$this->load->spark('ci_authentication/x.x.x');```
 
-***NOTE: Be sure you also have [CI Alerts](https://github.com/mikedfunk/CI-Alerts) version 1.1.6 as a spark and load it. CI Alerts are required for CI Authentication. This spark requires CI Alerts as a dependency, but double-check that you have it.***
+***NOTE: Be sure you also have [CI Alerts](https://github.com/mikedfunk/CI-Alerts) version 1.1.7 as a spark and load it. CI Alerts are required for CI Authentication. This spark requires CI Alerts as a dependency, but double-check that you have it.***
 
 restrict\_access()
 ----------------------------
