@@ -91,6 +91,14 @@ $config['login_success_url'] = 'dashboard';
 
 // --------------------------------------------------------------------------
 /**
+ * login_success_url_field
+ *
+ * The role field used to redirect successful logins to this page.
+ */
+$config['login_success_url_field'] = '';
+
+// --------------------------------------------------------------------------
+/**
  * confirm_string_field
  *
  * The field in the db assigned to a user that has not yet confirmed 
