@@ -10,8 +10,8 @@
  * @email		mike@mikefunk.com
  * 
  * @file		ci_authentication.php
- * @version		1.3.3
- * @date		03/28/2012
+ * @version		1.3.4
+ * @date		04/01/2012
  */
 
 // --------------------------------------------------------------------------
@@ -48,7 +48,7 @@ class ci_authentication
 		$this->_ci =& get_instance();
 		log_message('debug', 'CI Authentication: library initialized.');
 		
-		$this->_ci->load->spark('ci_alerts/1.1.6');
+		$this->_ci->load->spark('ci_alerts/1.1.7');
 		log_message('debug', 'CI Authentication: CI Alerts spark initialized.');
 	}
 	
@@ -98,9 +98,9 @@ class ci_authentication
 		}
 		
 		// if condition, only checking for condition set in session
-		if ($condition != '')
+		if ($condition !== '')
 		{
-			if(!$this->_ci->session->userdata($condition))
+			if(!$condition)
 			{
 				$this->_ci->ci_alerts->set('error', config_item('access_denied_message'));
 				$this->_ci->session->set_flashdata('alert_page_title', 'Access Denied');
