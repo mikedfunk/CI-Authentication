@@ -23,7 +23,7 @@ At the top of a CI controller method or in ```__construct()``` do this:
 
 It will redirect to the config\_item for logged\_out\_url.
 
-You can also add a parameter to restrict access to pages based on permissions for that role. For instance ```$this->ci_authentication->restrict_access('can_edit_pages')```. It checks the session for this variable. If it's false it will redirect to the config item access\_denied\_url.
+You can also add a parameter to restrict access to pages based on permissions for that role. For instance ```$this->ci_authentication->restrict_access($result->can_edit_pages)```. You pass in a variable that evaluates to true or false. If it's false it will redirect to the config item access\_denied\_url.
 
 ----------------------------
 
@@ -159,6 +159,10 @@ Shortcut to ```$this->ci_authentication->is_logged_in()```. Useful in views.
 
 Change Log
 ============================
+
+**1.3.4**
+
+* Changed ```restrict_access($param)``` to just take a true/false param and not check the session. This helps prevent session overload and is more flexible.
 
 **1.3.3**
 

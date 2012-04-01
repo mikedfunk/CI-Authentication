@@ -98,9 +98,9 @@ class ci_authentication
 		}
 		
 		// if condition, only checking for condition set in session
-		if ($condition != '')
+		if ($condition !== '')
 		{
-			if(!$this->_ci->session->userdata($condition))
+			if(!$condition)
 			{
 				$this->_ci->ci_alerts->set('error', config_item('access_denied_message'));
 				$this->_ci->session->set_flashdata('alert_page_title', 'Access Denied');
